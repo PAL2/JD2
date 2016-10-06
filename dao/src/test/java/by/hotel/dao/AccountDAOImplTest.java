@@ -31,9 +31,4 @@ public class AccountDAOImplTest {
         assertEquals(instance1.hashCode(), instance2.hashCode());
     }
 
-    @Test
-    public void testAddAccont() throws Exception{
-
-    }
-
 }
