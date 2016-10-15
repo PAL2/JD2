@@ -21,19 +21,6 @@ public class AccountServiceImpl extends AbstractService {
     public AccountServiceImpl() {
     }
 
-//    public static AccountServiceImpl getInstance() {
-//        AccountServiceImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (AccountServiceImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new AccountServiceImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized AccountServiceImpl getInstance() {
         if (instance == null) {
             instance = new AccountServiceImpl();

@@ -20,19 +20,6 @@ public class UserServiceImpl extends AbstractService {
     public UserServiceImpl() {
     }
 
-//    public static UserServiceImpl getInstance() {
-//        UserServiceImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (UserServiceImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new UserServiceImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized UserServiceImpl getInstance() {
         if (instance == null) {
             instance = new UserServiceImpl();

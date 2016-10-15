@@ -22,25 +22,13 @@ public class BookingServiceImpl extends AbstractService {
     public BookingServiceImpl() {
     }
 
-//    public static BookingServiceImpl getInstance() {
-//        BookingServiceImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (BookingServiceImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new BookingServiceImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized BookingServiceImpl getInstance() {
         if (instance == null) {
             instance = new BookingServiceImpl();
         }
         return instance;
     }
+
     public List<Booking> getAllBookingWithAccount() throws SQLException, ServiceException {
         List<Booking> bookings;
         try {

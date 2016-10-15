@@ -20,19 +20,6 @@ public class RoomServiceImpl extends AbstractService {
     public RoomServiceImpl() {
     }
 
-//    public static RoomServiceImpl getInstance() {
-//        RoomServiceImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (RoomServiceImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new RoomServiceImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized RoomServiceImpl getInstance() {
         if (instance == null) {
             instance = new RoomServiceImpl();
