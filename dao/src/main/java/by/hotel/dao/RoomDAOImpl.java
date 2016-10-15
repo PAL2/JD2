@@ -18,19 +18,6 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
     private RoomDAOImpl() {
     }
 
-//    public static RoomDAOImpl getInstance() {
-//        RoomDAOImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (RoomDAOImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new RoomDAOImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized RoomDAOImpl getInstance() {
         if (instance == null) {
             instance = new RoomDAOImpl();

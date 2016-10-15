@@ -23,19 +23,6 @@ public class UserDAOImpl implements AbstractDAO<User> {
     private UserDAOImpl() {
     }
 
-//    public static UserDAOImpl getInstance() {
-//        UserDAOImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (UserDAOImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new UserDAOImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized UserDAOImpl getInstance() {
         if (instance == null) {
             instance = new UserDAOImpl();

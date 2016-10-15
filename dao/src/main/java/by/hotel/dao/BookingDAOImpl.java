@@ -19,19 +19,6 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
     private BookingDAOImpl() {
     }
 
-//    public static BookingDAOImpl getInstance() {
-//        BookingDAOImpl localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (BookingDAOImpl.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new BookingDAOImpl();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
     public static synchronized BookingDAOImpl getInstance() {
         if (instance == null) {
             instance = new BookingDAOImpl();
