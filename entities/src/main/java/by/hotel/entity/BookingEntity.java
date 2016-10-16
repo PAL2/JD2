@@ -2,13 +2,13 @@ package by.hotel.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Table(name = "booking", schema = "booking", catalog = "")
+@Table(name = "booking", schema = "booking")
 public class BookingEntity {
     private Integer bookingId;
     private Date startDate;
@@ -169,25 +169,25 @@ public class BookingEntity {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
-    public RoomEntity getRoomByRoomId() {
-        return roomByRoomId;
-    }
-
-    public void setRoomByRoomId(RoomEntity roomByRoomId) {
-        this.roomByRoomId = roomByRoomId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    public UserEntity getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserEntity userByUserId) {
-        this.userByUserId = userByUserId;
-    }
+//    @ManyToOne
+//    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+//    public RoomEntity getRoomByRoomId() {
+//        return roomByRoomId;
+//    }
+//
+//    public void setRoomByRoomId(RoomEntity roomByRoomId) {
+//        this.roomByRoomId = roomByRoomId;
+//    }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+//    public UserEntity getUserByUserId() {
+//        return userByUserId;
+//    }
+//
+//    public void setUserByUserId(UserEntity userByUserId) {
+//        this.userByUserId = userByUserId;
+//    }
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")

@@ -13,5 +13,7 @@
     <property name="format_sql">true</property>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
+    <mapping class="by.hotel.entity.AccountEntity"/>
+    <mapping class="by.hotel.entity.BookingEntity"/>
   </session-factory>
 </hibernate-configuration>
