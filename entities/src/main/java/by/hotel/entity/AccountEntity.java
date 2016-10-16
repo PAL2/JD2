@@ -12,10 +12,25 @@ import java.util.Collection;
 public class AccountEntity {
     private int accountId;
     private int summa;
-    private Collection<BookingEntity> bookingsByAccountId;
+    private BookingEntity bookingEntity;
+
+    public AccountEntity() {
+    }
+
+    public AccountEntity(int accountId, int summa) {
+        this.accountId = accountId;
+        this.summa = summa;
+    }
+
+    public AccountEntity(int accountId, int summa, BookingEntity bookingEntity) {
+        this.accountId = accountId;
+        this.summa = summa;
+        this.bookingEntity = bookingEntity;
+    }
 
     @Id
-    @Column(name = "account_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "account_id", nullable = false, unique = true)
     public int getAccountId() {
         return accountId;
     }
@@ -54,12 +69,12 @@ public class AccountEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "accountByAccountId")
-    public Collection<BookingEntity> getBookingsByAccountId() {
-        return bookingsByAccountId;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountByAccountId", cascade = CascadeType.ALL)
+    public BookingEntity getBookingEntity() {
+        return bookingEntity;
     }
 
-    public void setBookingsByAccountId(Collection<BookingEntity> bookingsByAccountId) {
-        this.bookingsByAccountId = bookingsByAccountId;
+    public void setBookingEntity(BookingEntity bookingEntity) {
+        this.bookingEntity = bookingEntity;
     }
 }
