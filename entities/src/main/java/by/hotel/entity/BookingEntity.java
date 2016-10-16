@@ -10,7 +10,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "booking", schema = "booking", catalog = "")
 public class BookingEntity {
-    private int bookingId;
+    private Integer bookingId;
     private Date startDate;
     private Date endDate;
     private int place;
@@ -21,20 +21,41 @@ public class BookingEntity {
     private String status;
     private RoomEntity roomByRoomId;
     private UserEntity userByUserId;
-    private AccountEntity accountByAccountId;
+    private AccountEntity accountEntity;
+
+    public BookingEntity() {
+    }
+
+    public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
+                         Integer accountId, String status, RoomEntity roomByRoomId,
+                         UserEntity userByUserId, AccountEntity accountEntity) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.place = place;
+        this.category = category;
+        this.roomId = roomId;
+        this.userId = userId;
+        this.accountId = accountId;
+        this.status = status;
+        this.roomByRoomId = roomByRoomId;
+        this.userByUserId = userByUserId;
+        this.accountEntity = accountEntity;
+    }
 
     @Id
-    @Column(name = "booking_id", nullable = false)
-    public int getBookingId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "booking_id", nullable = false, unique = true)
+    public Integer getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(int bookingId) {
+    public void setBookingId(Integer bookingId) {
         this.bookingId = bookingId;
     }
 
     @Basic
     @Column(name = "start_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
     public Date getStartDate() {
         return startDate;
     }
@@ -45,6 +66,7 @@ public class BookingEntity {
 
     @Basic
     @Column(name = "end_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
     public Date getEndDate() {
         return endDate;
     }
@@ -167,13 +189,13 @@ public class BookingEntity {
         this.userByUserId = userByUserId;
     }
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
-    public AccountEntity getAccountByAccountId() {
-        return accountByAccountId;
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
     }
 
-    public void setAccountByAccountId(AccountEntity accountByAccountId) {
-        this.accountByAccountId = accountByAccountId;
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 }
