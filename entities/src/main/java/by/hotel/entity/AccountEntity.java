@@ -10,20 +10,18 @@ import java.util.Collection;
 @Entity
 @Table(name = "account", schema = "booking", catalog = "")
 public class AccountEntity {
-    private int accountId;
+    private Integer accountId;
     private int summa;
     private BookingEntity bookingEntity;
 
     public AccountEntity() {
     }
 
-    public AccountEntity(int accountId, int summa) {
-        this.accountId = accountId;
+    public AccountEntity(int summa) {
         this.summa = summa;
     }
 
-    public AccountEntity(int accountId, int summa, BookingEntity bookingEntity) {
-        this.accountId = accountId;
+    public AccountEntity(int summa, BookingEntity bookingEntity) {
         this.summa = summa;
         this.bookingEntity = bookingEntity;
     }
@@ -31,11 +29,11 @@ public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id", nullable = false, unique = true)
-    public int getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 
@@ -64,7 +62,7 @@ public class AccountEntity {
 
     @Override
     public int hashCode() {
-        int result = accountId;
+        Integer result = accountId;
         result = 31 * result + summa;
         return result;
     }
