@@ -3,26 +3,44 @@ package by.hotel.entity;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Table(name = "room", schema = "booking", catalog = "")
+@Table(name = "room", schema = "booking")
 public class RoomEntity {
-    private int roomId;
+    private Integer roomId;
     private String category;
     private int place;
     private int price;
-    private Collection<BookingEntity> bookingsByRoomId;
+    private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
+
+    public RoomEntity() {
+    }
+
+    public RoomEntity(String category, int place, int price) {
+        this.category = category;
+        this.place = place;
+        this.price = price;
+    }
+
+    public RoomEntity(String category, int place, int price, Set<BookingEntity> bookingEntities) {
+        this.category = category;
+        this.place = place;
+        this.price = price;
+        this.bookingEntities = bookingEntities;
+    }
 
     @Id
-    @Column(name = "room_id", nullable = false)
-    public int getRoomId() {
+    @Column(name = "room_id", nullable = false, unique = true)
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 
@@ -80,12 +98,12 @@ public class RoomEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "roomByRoomId")
-    public Collection<BookingEntity> getBookingsByRoomId() {
-        return bookingsByRoomId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity")
+    public Set<BookingEntity> getBookingEntities() {
+        return bookingEntities;
     }
 
-    public void setBookingsByRoomId(Collection<BookingEntity> bookingsByRoomId) {
-        this.bookingsByRoomId = bookingsByRoomId;
+    public void setBookingEntities(Set<BookingEntity> bookingEntities) {
+        this.bookingEntities = bookingEntities;
     }
 }

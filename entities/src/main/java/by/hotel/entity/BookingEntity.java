@@ -19,7 +19,7 @@ public class BookingEntity {
     private int userId;
     private Integer accountId;
     private String status;
-    private RoomEntity roomByRoomId;
+    private RoomEntity roomEntity;
     private UserEntity userByUserId;
     private AccountEntity accountEntity;
 
@@ -27,7 +27,7 @@ public class BookingEntity {
     }
 
     public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
-                         Integer accountId, String status, RoomEntity roomByRoomId,
+                         Integer accountId, String status, RoomEntity roomEntity,
                          UserEntity userByUserId, AccountEntity accountEntity) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -37,7 +37,7 @@ public class BookingEntity {
         this.userId = userId;
         this.accountId = accountId;
         this.status = status;
-        this.roomByRoomId = roomByRoomId;
+        this.roomEntity = roomEntity;
         this.userByUserId = userByUserId;
         this.accountEntity = accountEntity;
     }
@@ -96,7 +96,7 @@ public class BookingEntity {
     }
 
     @Basic
-    @Column(name = "room_id", nullable = true)
+    @Column(name = "room_id", nullable = true, insertable = false, updatable = false)
     public Integer getRoomId() {
         return roomId;
     }
@@ -169,16 +169,16 @@ public class BookingEntity {
         return result;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
-//    public RoomEntity getRoomByRoomId() {
-//        return roomByRoomId;
-//    }
-//
-//    public void setRoomByRoomId(RoomEntity roomByRoomId) {
-//        this.roomByRoomId = roomByRoomId;
-//    }
-//
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    public RoomEntity getRoomEntity() {
+        return roomEntity;
+    }
+
+    public void setRoomEntity(RoomEntity roomEntity) {
+        this.roomEntity = roomEntity;
+    }
+
 //    @ManyToOne
 //    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
 //    public UserEntity getUserByUserId() {
