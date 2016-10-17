@@ -16,5 +16,6 @@
     <mapping class="by.hotel.entity.AccountEntity"/>
     <mapping class="by.hotel.entity.BookingEntity"/>
     <mapping class="by.hotel.entity.RoomEntity"/>
+    <mapping class="by.hotel.entity.UserEntity"/>
   </session-factory>
 </hibernate-configuration>

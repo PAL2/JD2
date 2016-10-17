@@ -20,7 +20,7 @@ public class BookingEntity {
     private Integer accountId;
     private String status;
     private RoomEntity roomEntity;
-    private UserEntity userByUserId;
+    private UserEntity userEntity;
     private AccountEntity accountEntity;
 
     public BookingEntity() {
@@ -28,7 +28,7 @@ public class BookingEntity {
 
     public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
                          Integer accountId, String status, RoomEntity roomEntity,
-                         UserEntity userByUserId, AccountEntity accountEntity) {
+                         UserEntity userEntity, AccountEntity accountEntity) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.place = place;
@@ -38,7 +38,7 @@ public class BookingEntity {
         this.accountId = accountId;
         this.status = status;
         this.roomEntity = roomEntity;
-        this.userByUserId = userByUserId;
+        this.userEntity = userEntity;
         this.accountEntity = accountEntity;
     }
 
@@ -106,12 +106,12 @@ public class BookingEntity {
     }
 
     @Basic
-    @Column(name = "user_id", nullable = false)
-    public int getUserId() {
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -179,15 +179,15 @@ public class BookingEntity {
         this.roomEntity = roomEntity;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-//    public UserEntity getUserByUserId() {
-//        return userByUserId;
-//    }
-//
-//    public void setUserByUserId(UserEntity userByUserId) {
-//        this.userByUserId = userByUserId;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")

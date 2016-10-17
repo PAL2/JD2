@@ -8,23 +8,49 @@ import java.util.Collection;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Table(name = "user", schema = "booking", catalog = "")
+@Table(name = "user", schema = "booking")
 public class UserEntity {
-    private int userId;
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String userRole;
     private String login;
     private String password;
-    private Collection<BookingEntity> bookingsByUserId;
+    private Collection<BookingEntity> bookingEntities;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String firstName, String lastName, String userRole, String login, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userRole = userRole;
+        this.login = login;
+        this.password = password;
+    }
+
+    public UserEntity(String firstName, String lastName, String userRole, String login, String password,
+                      Collection<BookingEntity> bookingEntities) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userRole = userRole;
+        this.login = login;
+        this.password = password;
+        this.bookingEntities = bookingEntities;
+    }
+
+    public UserEntity(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 
     @Id
     @Column(name = "user_id", nullable = false)
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -106,12 +132,12 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByUserId")
-    public Collection<BookingEntity> getBookingsByUserId() {
-        return bookingsByUserId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    public Collection<BookingEntity> getBookingsEntities() {
+        return bookingEntities;
     }
 
-    public void setBookingsByUserId(Collection<BookingEntity> bookingsByUserId) {
-        this.bookingsByUserId = bookingsByUserId;
+    public void setBookingsEntities(Collection<BookingEntity> bookingEntities) {
+        this.bookingEntities = bookingEntities;
     }
 }

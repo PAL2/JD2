@@ -16,7 +16,7 @@ public class RoomEntity {
     private String category;
     private int place;
     private int price;
-    private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
+    private Set<BookingEntity> bookingEntities;
 
     public RoomEntity() {
     }
