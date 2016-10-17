@@ -7,7 +7,7 @@ import javax.persistence.Entity;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Table(name = "account", schema = "booking", catalog = "")
+@Table(name = "account", schema = "booking")
 public class AccountEntity {
     private Integer accountId;
     private int summa;
@@ -66,7 +66,7 @@ public class AccountEntity {
         return result;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountByAccountId", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountEntity", cascade = CascadeType.ALL)
     public BookingEntity getBookingEntity() {
         return bookingEntity;
     }

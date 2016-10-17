@@ -13,7 +13,7 @@ public class TestApp {
         session.beginTransaction();
         AccountEntity accountEntity = new AccountEntity();
 
-        accountEntity.setSumma(999);
+        accountEntity.setSumma(111);
         session.save(accountEntity);
         session.getTransaction().commit();
         System.out.println("Done");

@@ -116,7 +116,7 @@ public class BookingEntity {
     }
 
     @Basic
-    @Column(name = "account_id", nullable = true)
+    @Column(name = "account_id", nullable = true, insertable = false, updatable = false)
     public Integer getAccountId() {
         return accountId;
     }
