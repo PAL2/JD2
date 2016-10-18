@@ -2,8 +2,6 @@ package by.hotel.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,10 +10,24 @@ import java.util.Set;
 @Entity
 @Table(name = "room", schema = "booking")
 public class RoomEntity {
+
+    @Id
+    @Column(name = "room_id", nullable = false, unique = true)
     private Integer roomId;
+
+    @Basic
+    @Column(name = "category", nullable = false, length = 50)
     private String category;
+
+    @Basic
+    @Column(name = "place", nullable = false)
     private int place;
+
+    @Basic
+    @Column(name = "price", nullable = false)
     private int price;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity")
     private Set<BookingEntity> bookingEntities;
 
     public RoomEntity() {
@@ -34,8 +46,6 @@ public class RoomEntity {
         this.bookingEntities = bookingEntities;
     }
 
-    @Id
-    @Column(name = "room_id", nullable = false, unique = true)
     public Integer getRoomId() {
         return roomId;
     }
@@ -44,8 +54,6 @@ public class RoomEntity {
         this.roomId = roomId;
     }
 
-    @Basic
-    @Column(name = "category", nullable = false, length = 50)
     public String getCategory() {
         return category;
     }
@@ -54,8 +62,6 @@ public class RoomEntity {
         this.category = category;
     }
 
-    @Basic
-    @Column(name = "place", nullable = false)
     public int getPlace() {
         return place;
     }
@@ -64,14 +70,20 @@ public class RoomEntity {
         this.place = place;
     }
 
-    @Basic
-    @Column(name = "price", nullable = false)
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Set<BookingEntity> getBookingEntities() {
+        return bookingEntities;
+    }
+
+    public void setBookingEntities(Set<BookingEntity> bookingEntities) {
+        this.bookingEntities = bookingEntities;
     }
 
     @Override
@@ -96,14 +108,5 @@ public class RoomEntity {
         result = 31 * result + place;
         result = 31 * result + price;
         return result;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity")
-    public Set<BookingEntity> getBookingEntities() {
-        return bookingEntities;
-    }
-
-    public void setBookingEntities(Set<BookingEntity> bookingEntities) {
-        this.bookingEntities = bookingEntities;
     }
 }
