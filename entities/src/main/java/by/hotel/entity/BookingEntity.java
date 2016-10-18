@@ -51,15 +51,15 @@ public class BookingEntity {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "b_room_id", referencedColumnName = "room_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity roomEntity;
 
     @ManyToOne
-    @JoinColumn(name = "b_user_id", nullable = true, referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "user_id")
     private UserEntity userEntity;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "b_account_id", referencedColumnName = "account_id")
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private AccountEntity accountEntity;
 
     public BookingEntity() {
