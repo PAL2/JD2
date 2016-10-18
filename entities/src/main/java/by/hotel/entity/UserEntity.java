@@ -3,6 +3,8 @@ package by.hotel.entity;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Алексей on 16.10.2016.
@@ -10,13 +12,34 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "booking")
 public class UserEntity {
-    private Integer userId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id", nullable = false)
+    private int userId;
+
+    @Basic
+    @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
+
+    @Basic
+    @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
+
+    @Basic
+    @Column(name = "user_role", nullable = false, length = 50)
     private String userRole;
+
+    @Basic
+    @Column(name = "login", nullable = false, length = 20)
     private String login;
+
+    @Basic
+    @Column(name = "password", nullable = false, length = 355)
     private String password;
-    private Collection<BookingEntity> bookingEntities;
+
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
 
     public UserEntity() {
     }
@@ -30,7 +53,7 @@ public class UserEntity {
     }
 
     public UserEntity(String firstName, String lastName, String userRole, String login, String password,
-                      Collection<BookingEntity> bookingEntities) {
+                      Set<BookingEntity> bookingEntities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userRole = userRole;
@@ -44,18 +67,15 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Id
-    @Column(name = "user_id", nullable = false)
-    public Integer getUserId() {
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name = "first_name", nullable = false, length = 20)
     public String getFirstName() {
         return firstName;
     }
@@ -64,8 +84,6 @@ public class UserEntity {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "last_name", nullable = false, length = 20)
     public String getLastName() {
         return lastName;
     }
@@ -74,8 +92,6 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "user_role", nullable = false, length = 50)
     public String getUserRole() {
         return userRole;
     }
@@ -84,8 +100,6 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
-    @Basic
-    @Column(name = "login", nullable = false, length = 20)
     public String getLogin() {
         return login;
     }
@@ -94,8 +108,6 @@ public class UserEntity {
         this.login = login;
     }
 
-    @Basic
-    @Column(name = "password", nullable = false, length = 355)
     public String getPassword() {
         return password;
     }
@@ -132,12 +144,11 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
-    public Collection<BookingEntity> getBookingsEntities() {
+    public Set<BookingEntity> getBookingsEntities() {
         return bookingEntities;
     }
 
-    public void setBookingsEntities(Collection<BookingEntity> bookingEntities) {
+    public void setBookingsEntities(Set<BookingEntity> bookingEntities) {
         this.bookingEntities = bookingEntities;
     }
 }

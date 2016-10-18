@@ -10,6 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name = "booking", schema = "booking")
 public class BookingEntity {
+
+
     private Integer bookingId;
     private Date startDate;
     private Date endDate;
@@ -96,7 +98,7 @@ public class BookingEntity {
     }
 
     @Basic
-    @Column(name = "room_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "b_room_id", nullable = true, insertable = false, updatable = false)
     public Integer getRoomId() {
         return roomId;
     }
@@ -106,17 +108,17 @@ public class BookingEntity {
     }
 
     @Basic
-    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
-    public Integer getUserId() {
+    @Column(name = "b_user_id", nullable = false, insertable = false, updatable = false)
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
     @Basic
-    @Column(name = "account_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "b_account_id", nullable = true, insertable = false, updatable = false)
     public Integer getAccountId() {
         return accountId;
     }
@@ -170,7 +172,7 @@ public class BookingEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    @JoinColumn(name = "b_room_id", referencedColumnName = "room_id")
     public RoomEntity getRoomEntity() {
         return roomEntity;
     }
@@ -180,7 +182,7 @@ public class BookingEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "b_user_id", nullable = true, referencedColumnName = "user_id")
     public UserEntity getUserEntity() {
         return userEntity;
     }
@@ -190,7 +192,7 @@ public class BookingEntity {
     }
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    @JoinColumn(name = "b_account_id", referencedColumnName = "account_id")
     public AccountEntity getAccountEntity() {
         return accountEntity;
     }
