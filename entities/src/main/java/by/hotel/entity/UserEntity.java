@@ -2,7 +2,6 @@ package by.hotel.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +37,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false, length = 355)
     private String password;
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "userEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
 
     public UserEntity() {
@@ -66,7 +65,6 @@ public class UserEntity {
         this.login = login;
         this.password = password;
     }
-
 
     public int getUserId() {
         return userId;
@@ -116,6 +114,14 @@ public class UserEntity {
         this.password = password;
     }
 
+    public Set<BookingEntity> getBookingsEntities() {
+        return bookingEntities;
+    }
+
+    public void setBookingsEntities(Set<BookingEntity> bookingEntities) {
+        this.bookingEntities = bookingEntities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,13 +148,5 @@ public class UserEntity {
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
-    }
-
-    public Set<BookingEntity> getBookingsEntities() {
-        return bookingEntities;
-    }
-
-    public void setBookingsEntities(Set<BookingEntity> bookingEntities) {
-        this.bookingEntities = bookingEntities;
     }
 }

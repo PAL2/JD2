@@ -9,8 +9,17 @@ import javax.persistence.Entity;
 @Entity
 @Table(name = "account", schema = "booking")
 public class AccountEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "account_id", nullable = false, unique = true)
     private Integer accountId;
+
+    @Basic
+    @Column(name = "summa", nullable = false)
     private int summa;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountEntity", cascade = CascadeType.ALL)
     private BookingEntity bookingEntity;
 
     public AccountEntity() {
@@ -25,9 +34,6 @@ public class AccountEntity {
         this.bookingEntity = bookingEntity;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "account_id", nullable = false, unique = true)
     public Integer getAccountId() {
         return accountId;
     }
@@ -36,14 +42,20 @@ public class AccountEntity {
         this.accountId = accountId;
     }
 
-    @Basic
-    @Column(name = "summa", nullable = false)
     public int getSumma() {
         return summa;
     }
 
     public void setSumma(int summa) {
         this.summa = summa;
+    }
+
+    public BookingEntity getBookingEntity() {
+        return bookingEntity;
+    }
+
+    public void setBookingEntity(BookingEntity bookingEntity) {
+        this.bookingEntity = bookingEntity;
     }
 
     @Override
@@ -64,14 +76,5 @@ public class AccountEntity {
         Integer result = accountId;
         result = 31 * result + summa;
         return result;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountEntity", cascade = CascadeType.ALL)
-    public BookingEntity getBookingEntity() {
-        return bookingEntity;
-    }
-
-    public void setBookingEntity(BookingEntity bookingEntity) {
-        this.bookingEntity = bookingEntity;
     }
 }
