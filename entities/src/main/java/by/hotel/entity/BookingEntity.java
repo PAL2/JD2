@@ -11,18 +11,55 @@ import java.util.Date;
 @Table(name = "booking", schema = "booking")
 public class BookingEntity {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "booking_id", nullable = false, unique = true)
     private Integer bookingId;
+
+    @Basic
+    @Column(name = "start_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date startDate;
+
+    @Basic
+    @Column(name = "end_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
     private Date endDate;
+
+    @Basic
+    @Column(name = "place", nullable = false)
     private int place;
+
+    @Basic
+    @Column(name = "category", nullable = false, length = 50)
     private String category;
+
+    @Basic
+    @Column(name = "b_room_id", nullable = true, insertable = false, updatable = false)
     private Integer roomId;
+
+    @Basic
+    @Column(name = "b_user_id", nullable = false, insertable = false, updatable = false)
     private int userId;
+
+    @Basic
+    @Column(name = "b_account_id", nullable = true, insertable = false, updatable = false)
     private Integer accountId;
+
+    @Basic
+    @Column(name = "status", nullable = false, length = 50)
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "b_room_id", referencedColumnName = "room_id")
     private RoomEntity roomEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "b_user_id", nullable = true, referencedColumnName = "user_id")
     private UserEntity userEntity;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "b_account_id", referencedColumnName = "account_id")
     private AccountEntity accountEntity;
 
     public BookingEntity() {
@@ -44,9 +81,7 @@ public class BookingEntity {
         this.accountEntity = accountEntity;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "booking_id", nullable = false, unique = true)
+
     public Integer getBookingId() {
         return bookingId;
     }
@@ -55,9 +90,6 @@ public class BookingEntity {
         this.bookingId = bookingId;
     }
 
-    @Basic
-    @Column(name = "start_date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
     public Date getStartDate() {
         return startDate;
     }
@@ -66,9 +98,6 @@ public class BookingEntity {
         this.startDate = startDate;
     }
 
-    @Basic
-    @Column(name = "end_date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
     public Date getEndDate() {
         return endDate;
     }
@@ -77,8 +106,6 @@ public class BookingEntity {
         this.endDate = endDate;
     }
 
-    @Basic
-    @Column(name = "place", nullable = false)
     public int getPlace() {
         return place;
     }
@@ -87,8 +114,6 @@ public class BookingEntity {
         this.place = place;
     }
 
-    @Basic
-    @Column(name = "category", nullable = false, length = 50)
     public String getCategory() {
         return category;
     }
@@ -97,8 +122,6 @@ public class BookingEntity {
         this.category = category;
     }
 
-    @Basic
-    @Column(name = "b_room_id", nullable = true, insertable = false, updatable = false)
     public Integer getRoomId() {
         return roomId;
     }
@@ -107,8 +130,6 @@ public class BookingEntity {
         this.roomId = roomId;
     }
 
-    @Basic
-    @Column(name = "b_user_id", nullable = false, insertable = false, updatable = false)
     public int getUserId() {
         return userId;
     }
@@ -117,8 +138,6 @@ public class BookingEntity {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name = "b_account_id", nullable = true, insertable = false, updatable = false)
     public Integer getAccountId() {
         return accountId;
     }
@@ -127,14 +146,36 @@ public class BookingEntity {
         this.accountId = accountId;
     }
 
-    @Basic
-    @Column(name = "status", nullable = false, length = 50)
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public RoomEntity getRoomEntity() {
+        return roomEntity;
+    }
+
+    public void setRoomEntity(RoomEntity roomEntity) {
+        this.roomEntity = roomEntity;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     @Override
@@ -169,35 +210,5 @@ public class BookingEntity {
         result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "b_room_id", referencedColumnName = "room_id")
-    public RoomEntity getRoomEntity() {
-        return roomEntity;
-    }
-
-    public void setRoomEntity(RoomEntity roomEntity) {
-        this.roomEntity = roomEntity;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "b_user_id", nullable = true, referencedColumnName = "user_id")
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
-
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "b_account_id", referencedColumnName = "account_id")
-    public AccountEntity getAccountEntity() {
-        return accountEntity;
-    }
-
-    public void setAccountEntity(AccountEntity accountEntity) {
-        this.accountEntity = accountEntity;
     }
 }
