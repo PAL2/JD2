@@ -1,6 +1,8 @@
 package by.hotel.util;
 
+import by.hotel.entity.AccountEntity;
 import by.hotel.entity.BookingEntity;
+import by.hotel.entity.RoomEntity;
 import by.hotel.entity.UserEntity;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,16 +20,17 @@ public class TestApp {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        UserEntity userEntity = new UserEntity();
         String hql = "SELECT U FROM UserEntity U WHERE U.userId=24";
         Query query = session.createQuery(hql);
-        List<UserEntity> users = query.list();
-        userEntity = (UserEntity) query.uniqueResult();
-        System.out.println(userEntity);
-        int userId = userEntity.getUserId();
-        System.out.println(userId);
+        UserEntity userEntity = (UserEntity) query.uniqueResult();
 
+        String hql2 = "SELECT R FROM RoomEntity R WHERE R.roomId=1";
+        Query query1 = session.createQuery(hql2);
+        RoomEntity roomEntity = (RoomEntity) query1.uniqueResult();
 
+        String hql3 = "SELECT A FROM AccountEntity A WHERE A.accountId=26";
+        Query query2 = session.createQuery(hql3);
+        AccountEntity accountEntity = (AccountEntity) query2.uniqueResult();
 
         BookingEntity bookingEntity = new BookingEntity();
 
@@ -37,7 +40,9 @@ public class TestApp {
         bookingEntity.setEndDate(new Date());
         bookingEntity.setStatus("new");
         bookingEntity.setUserEntity(userEntity);
-      //  UserEntity user = new UserEntity();
+        bookingEntity.setRoomEntity(roomEntity);
+        bookingEntity.setAccountEntity(accountEntity);
+        //  UserEntity user = new UserEntity();
         //   user.setUserId(333);
         // session.save(user);
 

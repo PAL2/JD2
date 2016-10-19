@@ -35,15 +35,15 @@ public class BookingEntity {
     private String category;
 
     @Basic
-    @Column(name = "b_room_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "room_id", nullable = true, insertable = false, updatable = false)
     private Integer roomId;
 
     @Basic
-    @Column(name = "b_user_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private int userId;
 
     @Basic
-    @Column(name = "b_account_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "account_id", nullable = true, insertable = false, updatable = false)
     private Integer accountId;
 
     @Basic
