@@ -17,18 +17,18 @@ public class TestApp {
 
     public static void main(String[] args) {
         System.out.println("Hibernate one to one (Annotation)");
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getInstance().getSession();
         session.beginTransaction();
 
         String hql = "SELECT U FROM UserEntity U WHERE U.userId=24";
         Query query = session.createQuery(hql);
         UserEntity userEntity = (UserEntity) query.uniqueResult();
 
-        String hql2 = "SELECT R FROM RoomEntity R WHERE R.roomId=1";
+        String hql2 = "SELECT R FROM RoomEntity R WHERE R.roomId=2";
         Query query1 = session.createQuery(hql2);
         RoomEntity roomEntity = (RoomEntity) query1.uniqueResult();
 
-        String hql3 = "SELECT A FROM AccountEntity A WHERE A.accountId=26";
+        String hql3 = "SELECT A FROM AccountEntity A WHERE A.accountId=27";
         Query query2 = session.createQuery(hql3);
         AccountEntity accountEntity = (AccountEntity) query2.uniqueResult();
 
@@ -42,18 +42,9 @@ public class TestApp {
         bookingEntity.setUserEntity(userEntity);
         bookingEntity.setRoomEntity(roomEntity);
         bookingEntity.setAccountEntity(accountEntity);
-        //  UserEntity user = new UserEntity();
-        //   user.setUserId(333);
-        // session.save(user);
-
 
         session.save(bookingEntity);
 
-
-        //AccountEntity accountEntity = new AccountEntity();
-
-        //accountEntity.setSumma(111);
-        //session.save(accountEntity);
         session.getTransaction().commit();
         System.out.println("Done");
 

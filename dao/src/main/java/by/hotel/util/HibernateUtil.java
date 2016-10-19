@@ -1,5 +1,8 @@
 package by.hotel.util;
 
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -8,21 +11,43 @@ import org.hibernate.cfg.Configuration;
  */
 public class HibernateUtil {
 
-    private static SessionFactory sessionFactory;
+    private final Logger LOG = Logger.getLogger(HibernateUtil.class);
+    private static HibernateUtil util;
+    private SessionFactory sessionFactory;
+    private final ThreadLocal<Session> sessions = new ThreadLocal<>();
 
-    static {
+    private HibernateUtil() {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
+        } catch (Throwable e) {
+            LOG.error("Initial session factory creation failed ", e);
+            throw new ExceptionInInitializerError(e);
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public static HibernateUtil getInstance() {
+        if (util == null) {
+            util = new HibernateUtil();
+        }
+        return util;
     }
 
-    public static void shutdown() {
-        getSessionFactory().close();
+    public Session getSession() {
+        Session session = sessions.get();
+        if (session == null) {
+            session = sessionFactory.openSession();
+            sessions.set(session);
+        }
+        return session;
+    }
+
+    public void releaseSession(Session session) {
+        if (session != null) {
+            try {
+                sessions.remove();
+            } catch (HibernateException e) {
+                LOG.error(e);
+            }
+        }
     }
 }
