@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class AccountServiceImpl extends AbstractService {
     final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
+    private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
 
     private static AccountServiceImpl instance;
 
@@ -33,7 +34,7 @@ public class AccountServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            accounts = AccountDAOImpl.getInstance().getAll();
+            accounts = accountDAO.getAll();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -50,7 +51,7 @@ public class AccountServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            accounts = AccountDAOImpl.getInstance().getAllAccountByUser(userId);
+            accounts = accountDAO.getAllAccountByUser(userId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {

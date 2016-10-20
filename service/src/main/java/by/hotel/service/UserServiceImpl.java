@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class UserServiceImpl extends AbstractService {
     private static UserServiceImpl instance;
+    private UserDAOImpl userDAO = UserDAOImpl.getInstance();
     final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl() {
@@ -32,7 +33,7 @@ public class UserServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            user = UserDAOImpl.getInstance().logIn(login, password);
+            user = userDAO.logIn(login, password);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -49,7 +50,7 @@ public class UserServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            users = UserDAOImpl.getInstance().getAll();
+            users = userDAO.getAll();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -65,7 +66,7 @@ public class UserServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            UserDAOImpl.getInstance().register(firstName, lastName, login, password);
+            userDAO.register(firstName, lastName, login, password);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {

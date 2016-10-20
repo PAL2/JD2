@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class RoomServiceImpl extends AbstractService {
     private static RoomServiceImpl instance;
+    private RoomDAOImpl roomDAO = RoomDAOImpl.getInstance();
     final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 
     public RoomServiceImpl() {
@@ -32,7 +33,7 @@ public class RoomServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            rooms = RoomDAOImpl.getInstance().getAll();
+            rooms = roomDAO.getAll();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -49,7 +50,7 @@ public class RoomServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            rooms = RoomDAOImpl.getInstance().getAvailableRooms(bookingId);
+            rooms = roomDAO.getAvailableRooms(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {

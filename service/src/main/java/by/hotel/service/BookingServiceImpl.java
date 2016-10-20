@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class BookingServiceImpl extends AbstractService {
     private static BookingServiceImpl instance;
+    private BookingDAOImpl bookingDAO = BookingDAOImpl.getInstance();
+    private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
     final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
     public BookingServiceImpl() {
@@ -34,7 +36,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAllBookingWithAccount();
+            bookings = bookingDAO.getAllBookingWithAccount();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -50,7 +52,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAll();
+            bookings = bookingDAO.getAll();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -66,8 +68,8 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().chooseRoom(bookingId, roomId);
-            AccountDAOImpl.getInstance().addAccount(bookingId);
+            bookingDAO.chooseRoom(bookingId, roomId);
+            accountDAO.addAccount(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -81,7 +83,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().delete(bookingId);
+            bookingDAO.delete(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -96,7 +98,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAllNewBooking();
+            bookings = bookingDAO.getAllNewBooking();
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -111,7 +113,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().rejectBooking(bookingId);
+            bookingDAO.rejectBooking(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -126,7 +128,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAllBookingWithFinishedAccount(userId);
+            bookings = bookingDAO.getAllBookingWithFinishedAccount(userId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -142,7 +144,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAllBookingByUser(userId);
+            bookings = bookingDAO.getAllBookingByUser(userId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -158,7 +160,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().addBooking(userId, place, category, startDate, endDate);
+            bookingDAO.addBooking(userId, place, category, startDate, endDate);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -172,7 +174,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().payBooking(bookingId);
+            bookingDAO.payBooking(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -186,7 +188,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            BookingDAOImpl.getInstance().refuseBooking(bookingId);
+            bookingDAO.refuseBooking(bookingId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
@@ -201,7 +203,7 @@ public class BookingServiceImpl extends AbstractService {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            bookings = BookingDAOImpl.getInstance().getAllBookingWithAccountByUser(userId);
+            bookings = bookingDAO.getAllBookingWithAccountByUser(userId);
             conn.commit();
             LOG.info("Transaction is completed successfully");
         } catch (SQLException | DaoException e) {
