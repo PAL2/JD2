@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by Алексей on 19.10.2016.
  */
-@WebFilter(filterName = "ClosingSessionFilter")
+//@WebFilter(filterName = "ClosingSessionFilter")
 public class ClosingSessionFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {
@@ -20,8 +20,6 @@ public class ClosingSessionFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
         Session session = HibernateUtil.getInstance().getSession();
         chain.doFilter(request, response);
         HibernateUtil.getInstance().releaseSession(session);
