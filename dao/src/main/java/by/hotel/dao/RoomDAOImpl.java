@@ -41,7 +41,12 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
     public List<Room> getAvailableRooms(int bookingId) throws DaoException {
         Connection conn = DBUtil.getConnection();
         List<Room> rooms;
-        Booking booking = getBookingById(bookingId);
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Booking booking = BookingDAOImpl.getInstance().getBookingById(bookingId);
         Date startDate = Date.valueOf(booking.getStartDate());
         Date endDate = Date.valueOf(booking.getEndDate());
         try {
@@ -59,6 +64,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             ResultSet resultSet = ps.executeQuery();
             rooms = resultSetToRoomsList(resultSet);
             resultSet.close();
+            conn.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,35 +74,6 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
-    public Booking getBookingById(int bookingId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        Booking booking = new Booking();
-        try {
-            String query = "SELECT booking_id, start_date, end_date, place, category, room_id, user_id, account_id, status FROM booking WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, bookingId);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                booking.setBookingId(resultSet.getInt(1));
-                booking.setStartDate(resultSet.getDate(2).toLocalDate());
-                booking.setEndDate(resultSet.getDate(3).toLocalDate());
-                booking.setPlace(resultSet.getInt(4));
-                booking.setCategoryRoom(resultSet.getString(5));
-                booking.setRoomId(resultSet.getInt(6));
-                booking.setUserId(resultSet.getInt(7));
-                booking.setAccountId(resultSet.getInt(8));
-                booking.setStatus(resultSet.getString(9));
-            }
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
-            LOG.info("Failed to create a list bookings");
-            e.printStackTrace();
-            throw new DaoException();
-        }
-        return booking;
-
-    }
 
     public List<Room> getAll() throws DaoException {
         Connection conn = DBUtil.getConnection();

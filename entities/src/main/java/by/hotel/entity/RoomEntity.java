@@ -109,4 +109,15 @@ public class RoomEntity {
         result = 31 * result + price;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "RoomEntity{" +
+                "roomId=" + roomId +
+                ", category='" + category + '\'' +
+                ", place=" + place +
+                ", price=" + price +
+                ", bookingEntities=" + bookingEntities +
+                '}';
+    }
 }

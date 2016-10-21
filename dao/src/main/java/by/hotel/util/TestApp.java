@@ -1,11 +1,9 @@
 package by.hotel.util;
 
-import by.hotel.entity.AccountEntity;
-import by.hotel.entity.BookingEntity;
-import by.hotel.entity.RoomEntity;
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.Date;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
 public class TestApp {
 
     public static void main(String[] args) {
-        System.out.println("Hibernate one to one (Annotation)");
+        /*System.out.println("Hibernate one to one (Annotation)");
         Session session = HibernateUtil.getInstance().getSession();
         session.beginTransaction();
 
@@ -45,9 +43,17 @@ public class TestApp {
 
         session.save(bookingEntity);
 
-        session.getTransaction().commit();
-        System.out.println("Done");
-
+        session.getTransaction().commit();*/
+        //System.out.println("Done");
+        HibernateUtil util = HibernateUtil.getInstance();
+        List<Room> rooms;
+        Session session = util.getSession();
+        Transaction transaction = null;
+        transaction = session.beginTransaction();
+        Query query = session.createQuery("from RoomEntity ");
+        rooms = query.list();
+        System.out.println(rooms);
+        transaction.commit();
 
     }
 }
