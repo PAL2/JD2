@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import java.util.Date;
 import java.util.List;
 
+import static by.hotel.dao.AbstractDAO.util;
+
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -17,8 +19,14 @@ public class TestApp {
 
     public static void main(String[] args) {
         System.out.println("Hibernate one to one (Annotation)");
-        Session session = HibernateUtil.getInstance().getSession();
+        Session session = util.getSession();
         session.beginTransaction();
+
+      //  List<RoomEntity> rooms;
+
+        //Query query = session.createQuery("from RoomEntity ");
+        //rooms = query.list();
+      //  System.out.println(rooms);
 
         String hql = "SELECT U FROM UserEntity U WHERE U.userId=24";
         Query query = session.createQuery(hql);

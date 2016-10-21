@@ -1,5 +1,7 @@
 package by.hotel.service;
 
+import by.hotel.util.HibernateUtil;
+
 import java.sql.Connection;
 
 /**
@@ -7,4 +9,5 @@ import java.sql.Connection;
  */
 public abstract class AbstractService {
     protected Connection conn;
+    protected static HibernateUtil util = HibernateUtil.getInstance();
 }
