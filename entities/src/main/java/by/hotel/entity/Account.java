@@ -1,6 +1,6 @@
 package by.hotel.entity;
 
-public class Account extends Entity {
+public class Account extends AbstractEntity {
 
 	private int accountId;
 	private int summa;

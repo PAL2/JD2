@@ -2,7 +2,7 @@ package by.hotel.entity;
 
 import java.time.LocalDate;
 
-public class Booking extends Entity {
+public class Booking extends AbstractEntity {
 	private int bookingId;
 	private LocalDate startDate;
 	private LocalDate endDate;

@@ -1,6 +1,6 @@
 package by.hotel.entity;
 
-public class User extends Entity {
+public class User extends AbstractEntity {
 
 	private int userId;
 	private String firstName;

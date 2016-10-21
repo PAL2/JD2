@@ -1,6 +1,6 @@
 package by.hotel.entity;
 
-public class Room extends Entity {
+public class Room extends AbstractEntity {
 
 	private int roomId;
 	private String category;
