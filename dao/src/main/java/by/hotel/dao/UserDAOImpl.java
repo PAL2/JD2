@@ -1,9 +1,7 @@
 package by.hotel.dao;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.User;
-import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -14,8 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOImpl implements AbstractDAO<User> {
@@ -83,29 +79,14 @@ public class UserDAOImpl implements AbstractDAO<User> {
 
     @Override
     public void create(User entity) throws DaoException {
-
     }
 
     @Override
     public void update(User entity) throws DaoException {
-
     }
 
     @Override
     public void delete(int userId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        try {
-            String query = "DELETE FROM user WHERE user_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, userId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.info("Failed to delete the client");
-            throw new DaoException();
-        }
-
     }
 
     public List<User> getAll() throws DaoException {
