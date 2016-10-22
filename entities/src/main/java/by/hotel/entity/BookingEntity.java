@@ -52,7 +52,7 @@ public class BookingEntity {
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
-    private RoomEntity roomEntity;
+    private Room room;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "user_id")
@@ -66,7 +66,7 @@ public class BookingEntity {
     }
 
     public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
-                         Integer accountId, String status, RoomEntity roomEntity,
+                         Integer accountId, String status, Room room,
                          UserEntity userEntity, AccountEntity accountEntity) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -76,7 +76,7 @@ public class BookingEntity {
         this.userId = userId;
         this.accountId = accountId;
         this.status = status;
-        this.roomEntity = roomEntity;
+        this.room = room;
         this.userEntity = userEntity;
         this.accountEntity = accountEntity;
     }
@@ -154,12 +154,12 @@ public class BookingEntity {
         this.status = status;
     }
 
-    public RoomEntity getRoomEntity() {
-        return roomEntity;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomEntity(RoomEntity roomEntity) {
-        this.roomEntity = roomEntity;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public UserEntity getUserEntity() {

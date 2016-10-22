@@ -3,7 +3,7 @@ package by.hotel.command.admin;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.RoomEntity;
+import by.hotel.entity.Room;
 import by.hotel.service.RoomServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
 
@@ -18,7 +18,7 @@ public class AllRoomCommand implements ActionCommand {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.allRooms");
-            List<RoomEntity> rooms = RoomServiceImpl.getInstance().getAll();
+            List<Room> rooms = RoomServiceImpl.getInstance().getAll();
             request.setAttribute("allRooms", rooms);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");

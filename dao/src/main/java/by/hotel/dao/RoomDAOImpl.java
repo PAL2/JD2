@@ -3,7 +3,7 @@ package by.hotel.dao;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Booking;
-import by.hotel.entity.RoomEntity;
+import by.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -17,8 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
-    private final String GET_ALL_ROOMS = " from RoomEntity";
+public class RoomDAOImpl implements AbstractDAO<Room> {
+    private final String GET_ALL_ROOMS = " from Room";
     private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
@@ -32,10 +32,10 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
         return instance;
     }
 
-    private List<RoomEntity> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
-        List<RoomEntity> rooms = new ArrayList<>();
+    private List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
+        List<Room> rooms = new ArrayList<>();
         while (resultSet.next()) {
-            RoomEntity room = new RoomEntity();
+            Room room = new Room();
             room.setRoomId(resultSet.getInt(1));
             room.setCategory(resultSet.getString(2));
             room.setPlace(resultSet.getInt(3));
@@ -45,9 +45,9 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
         return rooms;
     }
 
-    public List<RoomEntity> getAvailableRooms(int bookingId) throws DaoException {
+    public List<Room> getAvailableRooms(int bookingId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<RoomEntity> rooms;
+        List<Room> rooms;
         try {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
@@ -82,8 +82,8 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
     }
 
 
-    public List<RoomEntity> getAll() throws DaoException {
-        List<RoomEntity> rooms;
+    public List<Room> getAll() throws DaoException {
+        List<Room> rooms;
         try {
             Session session = util.getSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
@@ -96,12 +96,12 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
     }
 
     @Override
-    public void create(RoomEntity entity) throws DaoException {
+    public void create(Room entity) throws DaoException {
 
     }
 
     @Override
-    public void update(RoomEntity entity) throws DaoException {
+    public void update(Room entity) throws DaoException {
 
     }
 

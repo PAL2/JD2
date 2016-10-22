@@ -8,7 +8,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "room", schema = "booking")
-public class RoomEntity extends AbstractEntity {
+public class Room extends AbstractEntity {
 
     @Id
     @Column(name = "room_id", nullable = false, unique = true)
@@ -26,19 +26,19 @@ public class RoomEntity extends AbstractEntity {
     @Column(name = "price", nullable = false)
     private int price;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private Set<BookingEntity> bookingEntities;
 
-    public RoomEntity() {
+    public Room() {
     }
 
-    public RoomEntity(String category, int place, int price) {
+    public Room(String category, int place, int price) {
         this.category = category;
         this.place = place;
         this.price = price;
     }
 
-    public RoomEntity(String category, int place, int price, Set<BookingEntity> bookingEntities) {
+    public Room(String category, int place, int price, Set<BookingEntity> bookingEntities) {
         this.category = category;
         this.place = place;
         this.price = price;
@@ -90,7 +90,7 @@ public class RoomEntity extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoomEntity that = (RoomEntity) o;
+        Room that = (Room) o;
 
         if (roomId != that.roomId) return false;
         if (place != that.place) return false;
@@ -111,7 +111,7 @@ public class RoomEntity extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "RoomEntity{" +
+        return "Room{" +
                 "roomId=" + roomId +
                 ", category='" + category + '\'' +
                 ", place=" + place +
