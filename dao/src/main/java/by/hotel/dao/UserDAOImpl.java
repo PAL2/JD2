@@ -52,7 +52,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
             user.setLastName(lastName);
             user.setUserRole("client");
             user.setLogin(login);
-            user.setPassword(password);
+            user.setPassword(hash(password));
             session.save(user);
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -90,7 +90,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
     }
 
     public List<User> getAll() throws DaoException {
-        List<User> allUsers = null;
+        List<User> allUsers;
         try {
             Session session = util.getSession();
             Criteria criteria = session.createCriteria(User.class);
