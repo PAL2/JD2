@@ -33,12 +33,12 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
         return instance;
     }
 
-    private List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
-        List<Room> rooms = new ArrayList<>();
+    private List<RoomEntity> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
+        List<RoomEntity> rooms = new ArrayList<>();
         while (resultSet.next()) {
-            Room room = new Room();
+            RoomEntity room = new RoomEntity();
             room.setRoomId(resultSet.getInt(1));
-            room.setCategoryRoom(resultSet.getString(2));
+            room.setCategory(resultSet.getString(2));
             room.setPlace(resultSet.getInt(3));
             room.setPrice(resultSet.getInt(4));
             rooms.add(room);
@@ -46,9 +46,9 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(int bookingId) throws DaoException {
+    public List<RoomEntity> getAvailableRooms(int bookingId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Room> rooms;
+        List<RoomEntity> rooms;
         try {
             conn.setAutoCommit(false);
         } catch (SQLException e) {

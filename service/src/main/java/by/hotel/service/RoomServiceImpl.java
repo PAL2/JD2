@@ -48,16 +48,17 @@ public class RoomServiceImpl extends AbstractService {
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(int bookingId) throws SQLException, ServiceException {
-        List<Room> rooms;
+    public List<RoomEntity> getAvailableRooms(int bookingId) throws SQLException, ServiceException {
+        List<RoomEntity> rooms;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             rooms = roomDAO.getAvailableRooms(bookingId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(rooms);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }

@@ -4,6 +4,7 @@ import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Room;
+import by.hotel.entity.RoomEntity;
 import by.hotel.service.RoomServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
 
@@ -20,7 +21,7 @@ public class ChooseRoomCommand implements ActionCommand {
         request.getSession().setAttribute("booking_id", bookingId);
         try {
             page = ConfigurationManager.getProperty("path.page.chooseRoom");
-            List<Room> rooms = RoomServiceImpl.getInstance().getAvailableRooms(bookingId);
+            List<RoomEntity> rooms = RoomServiceImpl.getInstance().getAvailableRooms(bookingId);
             request.setAttribute("availableRooms", rooms);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
