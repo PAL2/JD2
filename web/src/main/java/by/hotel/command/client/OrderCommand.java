@@ -3,7 +3,6 @@ package by.hotel.command.client;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.exceptions.ServiceException;

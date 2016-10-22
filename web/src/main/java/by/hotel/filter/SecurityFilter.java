@@ -3,8 +3,6 @@ package by.hotel.filter;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.CommandEnum;
 import by.hotel.command.ConfigurationManager;
-import by.hotel.command.EmptyCommand;
-import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 
 import javax.servlet.*;

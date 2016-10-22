@@ -2,7 +2,6 @@ package by.hotel.command.user;
 
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
-import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import org.apache.log4j.Logger;
 
