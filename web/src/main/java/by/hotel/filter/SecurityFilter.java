@@ -5,6 +5,7 @@ import by.hotel.command.CommandEnum;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.EmptyCommand;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -31,7 +32,7 @@ public class SecurityFilter implements Filter {
         ActionCommand current;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
-        User user = (User) httpRequest.getSession().getAttribute("user");
+        UserEntity user = (UserEntity) httpRequest.getSession().getAttribute("user");
         String userRole = user.getUserRole();
         try {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());

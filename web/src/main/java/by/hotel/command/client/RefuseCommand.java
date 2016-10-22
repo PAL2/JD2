@@ -6,6 +6,7 @@ import by.hotel.command.MessageManager;
 import by.hotel.entity.Account;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.AccountServiceImpl;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
@@ -23,7 +24,7 @@ public class RefuseCommand implements ActionCommand {
         final Logger LOG = Logger.getLogger(RefuseCommand.class);
         try {
             int bookingId = Integer.parseInt(request.getParameter("booking_id"));
-            User user = (User) request.getSession().getAttribute("user");
+            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
             int userId = user.getUserId();
             String login = user.getLogin();
             BookingServiceImpl.getInstance().refuseBooking(bookingId);

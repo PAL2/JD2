@@ -2,7 +2,6 @@ package by.hotel.dao;
 
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -20,7 +19,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOImpl implements AbstractDAO<UserEntity> {
-    // String REGISTER = "INSERT INTO UserEntity (firstName, lastName, userRole, login, password) VALUES (?,?,?,?,?)";
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
@@ -81,43 +79,6 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
             e.printStackTrace();
         }
         return md5Hashed;
-    }
-
-    public void create(User user) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        try {
-            String query = "INSERT INTO user (first_name, last_name, login, password) VALUES (?,?,?,?)";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getLogin());
-            ps.setString(4, user.getPassword());
-            user.setUserRole("client");
-            user.setUserId(0);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            LOG.info("Failed to create client");
-            e.printStackTrace();
-            throw new DaoException();
-        }
-    }
-
-    public void update(User user) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        try {
-            String query = "UPDATE user SET first_name=?, last_name=? WHERE user_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setInt(3, user.getUserId());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.info("Failed to update the client");
-            throw new DaoException();
-        }
     }
 
     @Override

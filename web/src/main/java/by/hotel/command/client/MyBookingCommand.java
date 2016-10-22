@@ -5,6 +5,7 @@ import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ public class MyBookingCommand implements ActionCommand {
     public String execute(HttpServletRequest request) {
         String page;
         final Logger LOG = Logger.getLogger(MyBookingCommand.class);
-        User user = (User) request.getSession().getAttribute("user");
+        UserEntity user = (UserEntity) request.getSession().getAttribute("user");
         int userId = user.getUserId();
         String login = user.getLogin();
         try {
