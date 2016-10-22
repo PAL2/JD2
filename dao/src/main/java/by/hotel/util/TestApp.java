@@ -1,5 +1,12 @@
 package by.hotel.util;
 
+import by.hotel.entity.UserEntity;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import static by.hotel.dao.AbstractDAO.util;
+
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -46,5 +53,19 @@ public class TestApp {
         rooms = query.list();
         System.out.println(rooms);
         transaction.commit();*/
+        String login = "admin";
+        String password = "21232f297a57a5a743894a0e4a801fc3";
+
+        try {
+            UserEntity user;
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM UserEntity WHERE login= :login AND password = :password");
+            query.setParameter("login", login);
+            query.setParameter("password", password);
+            user = (UserEntity) query.uniqueResult();
+            System.out.println(user);
+        } catch (HibernateException e) {
+
+        }
     }
 }

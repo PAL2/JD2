@@ -6,6 +6,9 @@ import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -32,23 +35,15 @@ public class UserDAOImpl implements AbstractDAO<User> {
     }
 
     public UserEntity logIn(String login, String password) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        UserEntity user = new UserEntity(login, password);
+        UserEntity user;
         try {
-            String query = "SELECT user_id, first_name, last_name, user_role FROM user WHERE login=? AND password=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, login);
-            ps.setString(2, hash(password));
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                user.setUserId(resultSet.getInt("user_id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setUserRole(resultSet.getString("user_role"));
-            }
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM UserEntity WHERE login= :login AND password = :password");
+            query.setParameter("login", login);
+            query.setParameter("password", hash(password));
+            user = (UserEntity) query.uniqueResult();
+            System.out.println(user);
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Unable to login");
             throw new DaoException();
