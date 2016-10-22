@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOImpl implements AbstractDAO<UserEntity> {
+    // String REGISTER = "INSERT INTO UserEntity (firstName, lastName, userRole, login, password) VALUES (?,?,?,?,?)";
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
@@ -50,18 +51,16 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
     }
 
     public void register(String firstName, String lastName, String login, String password) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         try {
-            String query = "INSERT INTO user (first_name, last_name, user_role, login, password) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
-            ps.setString(3, "client");
-            ps.setString(4, login);
-            ps.setString(5, hash(password));
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            UserEntity userEntity = new UserEntity();
+            userEntity.setFirstName(firstName);
+            userEntity.setLastName(lastName);
+            userEntity.setUserRole("client");
+            userEntity.setLogin(login);
+            userEntity.setPassword(password);
+            session.save(userEntity);
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Could not register");
             throw new DaoException();
