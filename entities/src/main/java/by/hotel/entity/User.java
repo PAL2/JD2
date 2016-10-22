@@ -37,7 +37,7 @@ public class User extends AbstractEntity{
     @Column(name = "password", nullable = false, length = 355)
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
 
     public User() {
