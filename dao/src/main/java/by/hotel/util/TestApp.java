@@ -1,13 +1,5 @@
 package by.hotel.util;
 
-import by.hotel.entity.*;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -22,9 +14,9 @@ public class TestApp {
         Query query = session.createQuery(hql);
         UserEntity userEntity = (UserEntity) query.uniqueResult();
 
-        String hql2 = "SELECT R FROM RoomEntity R WHERE R.roomId=2";
+        String hql2 = "SELECT R FROM Room R WHERE R.roomId=2";
         Query query1 = session.createQuery(hql2);
-        RoomEntity roomEntity = (RoomEntity) query1.uniqueResult();
+        Room room = (Room) query1.uniqueResult();
 
         String hql3 = "SELECT A FROM AccountEntity A WHERE A.accountId=27";
         Query query2 = session.createQuery(hql3);
@@ -38,22 +30,21 @@ public class TestApp {
         bookingEntity.setEndDate(new Date());
         bookingEntity.setStatus("new");
         bookingEntity.setUserEntity(userEntity);
-        bookingEntity.setRoomEntity(roomEntity);
+        bookingEntity.setRoom(room);
         bookingEntity.setAccountEntity(accountEntity);
 
         session.save(bookingEntity);
 
         session.getTransaction().commit();*/
         //System.out.println("Done");
-        HibernateUtil util = HibernateUtil.getInstance();
+        /*HibernateUtil util = HibernateUtil.getInstance();
         List<Room> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
-        Query query = session.createQuery("from RoomEntity ");
+        Query query = session.createQuery("from Room ");
         rooms = query.list();
         System.out.println(rooms);
-        transaction.commit();
-
+        transaction.commit();*/
     }
 }
