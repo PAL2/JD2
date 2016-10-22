@@ -3,7 +3,6 @@ package by.hotel.dao;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Booking;
-import by.hotel.entity.Room;
 import by.hotel.entity.RoomEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -94,15 +93,6 @@ public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
             throw new DaoException();
         }
         return rooms;
-    }
-
-
-    public void create(Room entity) {
-        // TODO Auto-generated method stub
-    }
-
-    public void update(Room entity) {
-        // TODO Auto-generated method stub
     }
 
     @Override

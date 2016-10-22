@@ -3,7 +3,6 @@ package by.hotel.command.admin;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.Room;
 import by.hotel.entity.RoomEntity;
 import by.hotel.service.RoomServiceImpl;
 import by.hotel.service.exceptions.ServiceException;

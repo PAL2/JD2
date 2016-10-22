@@ -1,13 +1,5 @@
 package by.hotel.util;
 
-import by.hotel.entity.*;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -45,15 +37,14 @@ public class TestApp {
 
         session.getTransaction().commit();*/
         //System.out.println("Done");
-        HibernateUtil util = HibernateUtil.getInstance();
-        List<Room> rooms;
+        /*HibernateUtil util = HibernateUtil.getInstance();
+        List<RoomEntity> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         Query query = session.createQuery("from RoomEntity ");
         rooms = query.list();
         System.out.println(rooms);
-        transaction.commit();
-
+        transaction.commit();*/
     }
 }

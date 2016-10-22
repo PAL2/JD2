@@ -1,9 +1,7 @@
 package by.hotel.service;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.RoomDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.Room;
 import by.hotel.entity.RoomEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
