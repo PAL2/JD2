@@ -4,14 +4,22 @@ import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Booking;
 import by.hotel.entity.Room;
+import by.hotel.entity.RoomEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAOImpl implements AbstractDAO<Room> {
+public class RoomDAOImpl implements AbstractDAO<RoomEntity> {
+    private final String GET_ALL_ROOMS = " from RoomEntity";
     private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
@@ -75,31 +83,36 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
     }
 
 
-    public List<Room> getAll() throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        List<Room> rooms;
+    public List<RoomEntity> getAll() throws DaoException {
+        List<RoomEntity> rooms;
         try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM room");
-            rooms = resultSetToRoomsList(resultSet);
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.info("Unable to create a list of numbers");
+            Session session = util.getSession();
+            Query query = session.createQuery(GET_ALL_ROOMS);
+            rooms = query.list();
+        } catch (HibernateException e) {
+            LOG.error("Unable to return list of clients. Error in DAO: ");
             throw new DaoException();
         }
         return rooms;
     }
 
-    @Override
+
     public void create(Room entity) {
         // TODO Auto-generated method stub
     }
 
-    @Override
     public void update(Room entity) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void create(RoomEntity entity) throws DaoException {
+
+    }
+
+    @Override
+    public void update(RoomEntity entity) throws DaoException {
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import by.hotel.connect.DBUtil;
 import by.hotel.dao.RoomDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Room;
+import by.hotel.entity.RoomEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -30,8 +31,8 @@ public class RoomServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Room> getAll() throws SQLException, ServiceException {
-        List<Room> rooms;
+    public List<RoomEntity> getAll() throws SQLException, ServiceException {
+        List<RoomEntity> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
         try {

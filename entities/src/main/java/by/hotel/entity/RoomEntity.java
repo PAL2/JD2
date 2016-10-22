@@ -1,7 +1,6 @@
 package by.hotel.entity;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Set;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "room", schema = "booking")
-public class RoomEntity {
+public class RoomEntity extends AbstractEntity {
 
     @Id
     @Column(name = "room_id", nullable = false, unique = true)
