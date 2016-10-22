@@ -3,7 +3,6 @@ package by.hotel.service;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.UserDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -49,16 +48,17 @@ public class UserServiceImpl extends AbstractService {
 
     }
 
-    public List<User> getAll() throws SQLException, ServiceException {
-        List<User> users;
+    public List<UserEntity> getAll() throws SQLException, ServiceException {
+        List<UserEntity> users;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             users = userDAO.getAll();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(users);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }

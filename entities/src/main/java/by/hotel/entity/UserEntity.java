@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user", schema = "booking")
-public class UserEntity {
+public class UserEntity extends AbstractEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

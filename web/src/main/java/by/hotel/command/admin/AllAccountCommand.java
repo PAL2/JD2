@@ -5,7 +5,7 @@ import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Account;
 import by.hotel.entity.Booking;
-import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.AccountServiceImpl;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.UserServiceImpl;
@@ -26,7 +26,7 @@ public class AllAccountCommand implements ActionCommand {
             request.setAttribute("allBookings", bookings);
             List<Account> accounts = AccountServiceImpl.getInstance().getAll();
             request.setAttribute("allAccounts", accounts);
-            List<User> users = UserServiceImpl.getInstance().getAll();
+            List<UserEntity> users = UserServiceImpl.getInstance().getAll();
             request.setAttribute("allUsers", users);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");

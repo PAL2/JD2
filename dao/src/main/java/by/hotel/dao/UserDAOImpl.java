@@ -20,7 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements AbstractDAO<User> {
+public class UserDAOImpl implements AbstractDAO<UserEntity> {
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
@@ -85,7 +85,6 @@ public class UserDAOImpl implements AbstractDAO<User> {
         return md5Hashed;
     }
 
-    @Override
     public void create(User user) throws DaoException {
         Connection conn = DBUtil.getConnection();
         try {
@@ -106,7 +105,6 @@ public class UserDAOImpl implements AbstractDAO<User> {
         }
     }
 
-    @Override
     public void update(User user) throws DaoException {
         Connection conn = DBUtil.getConnection();
         try {
@@ -122,6 +120,16 @@ public class UserDAOImpl implements AbstractDAO<User> {
             LOG.info("Failed to update the client");
             throw new DaoException();
         }
+    }
+
+    @Override
+    public void create(UserEntity entity) throws DaoException {
+
+    }
+
+    @Override
+    public void update(UserEntity entity) throws DaoException {
+
     }
 
     @Override
@@ -141,14 +149,14 @@ public class UserDAOImpl implements AbstractDAO<User> {
 
     }
 
-    public List<User> getAll() throws DaoException {
+    public List<UserEntity> getAll() throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<User> allUsers = new ArrayList<>();
+        List<UserEntity> allUsers = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE user_role=\"client\"");
             while (resultSet.next()) {
-                User user = new User();
+                UserEntity user = new UserEntity();
                 user.setUserId(resultSet.getInt(1));
                 user.setFirstName(resultSet.getString(2));
                 user.setLastName(resultSet.getString(3));

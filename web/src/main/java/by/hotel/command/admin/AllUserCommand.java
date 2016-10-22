@@ -3,7 +3,7 @@ package by.hotel.command.admin;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.UserServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
 
@@ -18,7 +18,7 @@ public class AllUserCommand implements ActionCommand {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.allUsers");
-            List<User> users = UserServiceImpl.getInstance().getAll();
+            List<UserEntity> users = UserServiceImpl.getInstance().getAll();
             request.setAttribute("allUsers", users);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
