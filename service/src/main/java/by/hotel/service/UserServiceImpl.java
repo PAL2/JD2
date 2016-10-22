@@ -4,8 +4,11 @@ import by.hotel.connect.DBUtil;
 import by.hotel.dao.UserDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,16 +31,17 @@ public class UserServiceImpl extends AbstractService {
         return instance;
     }
 
-    public User logIn(String login, String password) throws SQLException, ServiceException {
-        User user;
+    public UserEntity logIn(String login, String password) throws SQLException, ServiceException {
+        UserEntity user;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             user = userDAO.logIn(login, password);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(user);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }

@@ -5,6 +5,7 @@ import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.UserServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
@@ -23,7 +24,7 @@ public class LoginCommand implements ActionCommand {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         try {
-            User user = UserServiceImpl.getInstance().logIn(login, password);
+            UserEntity user = UserServiceImpl.getInstance().logIn(login, password);
             request.getSession().setAttribute("user", user);
             LOG.info("On the site came user with login : " + login);
             try {

@@ -3,6 +3,7 @@ package by.hotel.dao;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.User;
+import by.hotel.entity.UserEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 
@@ -30,9 +31,9 @@ public class UserDAOImpl implements AbstractDAO<User> {
         return instance;
     }
 
-    public User logIn(String login, String password) throws DaoException {
+    public UserEntity logIn(String login, String password) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        User user = new User(login, password);
+        UserEntity user = new UserEntity(login, password);
         try {
             String query = "SELECT user_id, first_name, last_name, user_role FROM user WHERE login=? AND password=?";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
