@@ -1,6 +1,5 @@
 package by.hotel.service;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.UserDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.UserEntity;
@@ -30,7 +29,7 @@ public class UserServiceImpl extends AbstractService {
         return instance;
     }
 
-    public UserEntity logIn(String login, String password) throws SQLException, ServiceException {
+    public UserEntity logIn(String login, String password) throws ServiceException {
         UserEntity user;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -45,7 +44,6 @@ public class UserServiceImpl extends AbstractService {
             throw new ServiceException(e.getMessage());
         }
         return user;
-
     }
 
     public List<UserEntity> getAll() throws SQLException, ServiceException {
@@ -67,14 +65,15 @@ public class UserServiceImpl extends AbstractService {
 
     public void register(String firstName, String lastName, String login, String password)
             throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
-            conn.commit();
+            transaction.commit();
             LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
