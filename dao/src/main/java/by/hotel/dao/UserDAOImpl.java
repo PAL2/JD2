@@ -6,18 +6,17 @@ import by.hotel.entity.User;
 import by.hotel.entity.UserEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements AbstractDAO<UserEntity> {
@@ -150,24 +149,13 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
     }
 
     public List<UserEntity> getAll() throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        List<UserEntity> allUsers = new ArrayList<>();
+        List<UserEntity> allUsers = null;
         try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE user_role=\"client\"");
-            while (resultSet.next()) {
-                UserEntity user = new UserEntity();
-                user.setUserId(resultSet.getInt(1));
-                user.setFirstName(resultSet.getString(2));
-                user.setLastName(resultSet.getString(3));
-                user.setUserRole(resultSet.getString(4));
-                user.setLogin(resultSet.getString(5));
-                user.setPassword(resultSet.getString(6));
-                allUsers.add(user);
-            }
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Criteria criteria = session.createCriteria(UserEntity.class);
+            criteria.add(Restrictions.eq("userRole", "client"));
+            allUsers = criteria.list();
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Unable to create the list of clients");
             throw new DaoException();
