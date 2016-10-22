@@ -5,7 +5,7 @@ import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Account;
 import by.hotel.entity.Booking;
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.User;
 import by.hotel.service.AccountServiceImpl;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
@@ -20,7 +20,7 @@ public class MyAccountsCommand implements ActionCommand {
     public String execute(HttpServletRequest request) {
         String page;
         try {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUserId();
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithFinishedAccount(userId);
             request.setAttribute("bookingByUser", bookings);

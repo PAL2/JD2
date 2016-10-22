@@ -1,17 +1,17 @@
 package by.hotel.dao;
 
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.User;
 import org.junit.Before;
 
 /**
  * Created by Алексей on 06.10.2016.
  */
 public class UserDAOImplTest {
-    private UserEntity expected;
+    private User expected;
 
     @Before
     public void setExpected() {
-        expected = new UserEntity("Алексей", "Петров", "admin", "pal", "1234");
+        expected = new User("Алексей", "Петров", "admin", "pal", "1234");
     }
 
     public void tearDown() {

@@ -2,7 +2,7 @@ package by.hotel.dao;
 
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.User;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -18,7 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDAOImpl implements AbstractDAO<UserEntity> {
+public class UserDAOImpl implements AbstractDAO<User> {
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
@@ -32,14 +32,14 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
         return instance;
     }
 
-    public UserEntity logIn(String login, String password) throws DaoException {
-        UserEntity user;
+    public User logIn(String login, String password) throws DaoException {
+        User user;
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("FROM UserEntity WHERE login= :login AND password = :password");
+            Query query = session.createQuery("FROM User WHERE login= :login AND password = :password");
             query.setParameter("login", login);
             query.setParameter("password", hash(password));
-            user = (UserEntity) query.uniqueResult();
+            user = (User) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Unable to login");
@@ -51,13 +51,13 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
     public void register(String firstName, String lastName, String login, String password) throws DaoException {
         try {
             Session session = util.getSession();
-            UserEntity userEntity = new UserEntity();
-            userEntity.setFirstName(firstName);
-            userEntity.setLastName(lastName);
-            userEntity.setUserRole("client");
-            userEntity.setLogin(login);
-            userEntity.setPassword(password);
-            session.save(userEntity);
+            User user = new User();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setUserRole("client");
+            user.setLogin(login);
+            user.setPassword(password);
+            session.save(user);
         } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Could not register");
@@ -82,12 +82,12 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
     }
 
     @Override
-    public void create(UserEntity entity) throws DaoException {
+    public void create(User entity) throws DaoException {
 
     }
 
     @Override
-    public void update(UserEntity entity) throws DaoException {
+    public void update(User entity) throws DaoException {
 
     }
 
@@ -108,11 +108,11 @@ public class UserDAOImpl implements AbstractDAO<UserEntity> {
 
     }
 
-    public List<UserEntity> getAll() throws DaoException {
-        List<UserEntity> allUsers = null;
+    public List<User> getAll() throws DaoException {
+        List<User> allUsers = null;
         try {
             Session session = util.getSession();
-            Criteria criteria = session.createCriteria(UserEntity.class);
+            Criteria criteria = session.createCriteria(User.class);
             criteria.add(Restrictions.eq("userRole", "client"));
             allUsers = criteria.list();
         } catch (HibernateException e) {

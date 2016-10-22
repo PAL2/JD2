@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user", schema = "booking")
-public class UserEntity extends AbstractEntity{
+public class User extends AbstractEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,10 +40,10 @@ public class UserEntity extends AbstractEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
 
-    public UserEntity() {
+    public User() {
     }
 
-    public UserEntity(String firstName, String lastName, String userRole, String login, String password) {
+    public User(String firstName, String lastName, String userRole, String login, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userRole = userRole;
@@ -51,8 +51,8 @@ public class UserEntity extends AbstractEntity{
         this.password = password;
     }
 
-    public UserEntity(String firstName, String lastName, String userRole, String login, String password,
-                      Set<BookingEntity> bookingEntities) {
+    public User(String firstName, String lastName, String userRole, String login, String password,
+                Set<BookingEntity> bookingEntities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userRole = userRole;
@@ -61,7 +61,7 @@ public class UserEntity extends AbstractEntity{
         this.bookingEntities = bookingEntities;
     }
 
-    public UserEntity(String login, String password) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -127,7 +127,7 @@ public class UserEntity extends AbstractEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserEntity that = (UserEntity) o;
+        User that = (User) o;
 
         if (userId != that.userId) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
@@ -152,7 +152,7 @@ public class UserEntity extends AbstractEntity{
 
     @Override
     public String toString() {
-        return "UserEntity{" +
+        return "User{" +
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

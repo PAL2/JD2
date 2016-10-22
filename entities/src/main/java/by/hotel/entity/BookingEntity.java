@@ -56,7 +56,7 @@ public class BookingEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "user_id")
-    private UserEntity userEntity;
+    private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
@@ -67,7 +67,7 @@ public class BookingEntity {
 
     public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
                          Integer accountId, String status, Room room,
-                         UserEntity userEntity, AccountEntity accountEntity) {
+                         User user, AccountEntity accountEntity) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.place = place;
@@ -77,7 +77,7 @@ public class BookingEntity {
         this.accountId = accountId;
         this.status = status;
         this.room = room;
-        this.userEntity = userEntity;
+        this.user = user;
         this.accountEntity = accountEntity;
     }
 
@@ -162,12 +162,12 @@ public class BookingEntity {
         this.room = room;
     }
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public AccountEntity getAccountEntity() {

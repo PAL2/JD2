@@ -2,7 +2,7 @@ package by.hotel.service;
 
 import by.hotel.dao.UserDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.User;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -29,8 +29,8 @@ public class UserServiceImpl extends AbstractService {
         return instance;
     }
 
-    public UserEntity logIn(String login, String password) throws ServiceException {
-        UserEntity user;
+    public User logIn(String login, String password) throws ServiceException {
+        User user;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -46,8 +46,8 @@ public class UserServiceImpl extends AbstractService {
         return user;
     }
 
-    public List<UserEntity> getAll() throws SQLException, ServiceException {
-        List<UserEntity> users;
+    public List<User> getAll() throws SQLException, ServiceException {
+        List<User> users;
         Session session = util.getSession();
         Transaction transaction = null;
         try {

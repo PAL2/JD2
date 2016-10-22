@@ -3,7 +3,7 @@ package by.hotel.command.client;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.UserEntity;
+import by.hotel.entity.User;
 import by.hotel.service.BookingServiceImpl;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -20,7 +20,7 @@ public class OrderCommand implements ActionCommand {
         String page;
         final Logger LOG = Logger.getLogger(OrderCommand.class);
         try {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUserId();
             String login = user.getLogin();
             int place = Integer.parseInt(request.getParameter("numberPlaces"));
