@@ -42,7 +42,6 @@ public class UserDAOImpl implements AbstractDAO<User> {
             query.setParameter("login", login);
             query.setParameter("password", hash(password));
             user = (UserEntity) query.uniqueResult();
-            System.out.println(user);
         } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Unable to login");
