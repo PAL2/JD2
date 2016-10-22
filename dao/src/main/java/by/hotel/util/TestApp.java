@@ -1,5 +1,12 @@
 package by.hotel.util;
 
+import by.hotel.entity.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import static by.hotel.dao.AbstractDAO.util;
+
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -10,9 +17,9 @@ public class TestApp {
         Session session = HibernateUtil.getInstance().getSession();
         session.beginTransaction();
 
-        String hql = "SELECT U FROM UserEntity U WHERE U.userId=24";
+        String hql = "SELECT U FROM User U WHERE U.userId=24";
         Query query = session.createQuery(hql);
-        UserEntity userEntity = (UserEntity) query.uniqueResult();
+        User userEntity = (User) query.uniqueResult();
 
         String hql2 = "SELECT R FROM Room R WHERE R.roomId=2";
         Query query1 = session.createQuery(hql2);
@@ -29,7 +36,7 @@ public class TestApp {
         bookingEntity.setStartDate(new Date());
         bookingEntity.setEndDate(new Date());
         bookingEntity.setStatus("new");
-        bookingEntity.setUserEntity(userEntity);
+        bookingEntity.setUser(userEntity);
         bookingEntity.setRoom(room);
         bookingEntity.setAccountEntity(accountEntity);
 
@@ -46,5 +53,19 @@ public class TestApp {
         rooms = query.list();
         System.out.println(rooms);
         transaction.commit();*/
+        String login = "admin";
+        String password = "21232f297a57a5a743894a0e4a801fc3";
+
+        try {
+            User user;
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM User WHERE login= :login AND password = :password");
+            query.setParameter("login", login);
+            query.setParameter("password", password);
+            user = (User) query.uniqueResult();
+            System.out.println(user);
+        } catch (HibernateException e) {
+
+        }
     }
 }

@@ -1,11 +1,12 @@
 package by.hotel.service;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.UserDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.User;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,33 +29,34 @@ public class UserServiceImpl extends AbstractService {
         return instance;
     }
 
-    public User logIn(String login, String password) throws SQLException, ServiceException {
+    public User logIn(String login, String password) throws ServiceException {
         User user;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             user = userDAO.logIn(login, password);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(user);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return user;
-
     }
 
     public List<User> getAll() throws SQLException, ServiceException {
         List<User> users;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             users = userDAO.getAll();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(users);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -63,14 +65,15 @@ public class UserServiceImpl extends AbstractService {
 
     public void register(String firstName, String lastName, String login, String password)
             throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
-            conn.commit();
+            transaction.commit();
             LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }

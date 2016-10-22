@@ -3,7 +3,6 @@ package by.hotel.filter;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.CommandEnum;
 import by.hotel.command.ConfigurationManager;
-import by.hotel.command.EmptyCommand;
 import by.hotel.entity.User;
 
 import javax.servlet.*;
@@ -35,7 +34,6 @@ public class SecurityFilter implements Filter {
         String userRole = user.getUserRole();
         try {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
-          //  current = currentEnum.getCurrentCommand();
             if (userRole == null) {
                 if (currentEnum == CommandEnum.LOGIN) {
                     chain.doFilter(request, response);
@@ -51,8 +49,7 @@ public class SecurityFilter implements Filter {
                 chain.doFilter(request, response);
 
             }
-        }
-        catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             String page = ConfigurationManager.getProperty("path.page.index");
             RequestDispatcher dispatcher = request.getRequestDispatcher(page);
             dispatcher.forward(httpRequest, httpResponse);

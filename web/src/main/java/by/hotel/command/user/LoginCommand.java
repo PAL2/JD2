@@ -42,7 +42,7 @@ public class LoginCommand implements ActionCommand {
         } catch (NullPointerException e) {
             request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
             page = ConfigurationManager.getProperty("path.page.login");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }
