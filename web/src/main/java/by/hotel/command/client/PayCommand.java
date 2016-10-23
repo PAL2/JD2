@@ -3,7 +3,7 @@ package by.hotel.command.client;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.Account;
+import by.hotel.entity.AccountEntity;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
 import by.hotel.service.AccountServiceImpl;
@@ -29,7 +29,7 @@ public class PayCommand implements ActionCommand {
             BookingServiceImpl.getInstance().payBooking(bookingId);
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithFinishedAccount(userId);
             request.setAttribute("bookingByUser", bookings);
-            List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
+            List<AccountEntity> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             request.setAttribute("paySuccess", MessageManager.getProperty("message.paySuccess"));
             page = ConfigurationManager.getProperty("path.page.myAccounts");

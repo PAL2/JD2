@@ -3,6 +3,7 @@ package by.hotel.dao;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Account;
+import by.hotel.entity.AccountEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountDAOImpl implements AbstractDAO<Account> {
+public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
     private static AccountDAOImpl instance;
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
 
@@ -50,9 +51,9 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         }
     }
 
-    public List<Account> getAllAccountByUser(int userId) throws DaoException {
+    public List<AccountEntity> getAllAccountByUser(int userId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Account> accounts;
+        List<AccountEntity> accounts;
         try {
             String query = "SELECT account.account_id, summa FROM account JOIN booking "
                     + "ON account.account_id=booking.account_id WHERE booking.user_id=?";
@@ -70,10 +71,10 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         return accounts;
     }
 
-    private List<Account> resultSetToAccountsList(ResultSet resultSet) throws SQLException {
-        List<Account> accounts = new ArrayList<>();
+    private List<AccountEntity> resultSetToAccountsList(ResultSet resultSet) throws SQLException {
+        List<AccountEntity> accounts = new ArrayList<>();
         while (resultSet.next()) {
-            Account account = new Account();
+            AccountEntity account = new AccountEntity();
             account.setAccountId(resultSet.getInt(1));
             account.setSumma(resultSet.getInt(2));
             accounts.add(account);
@@ -89,13 +90,23 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         // TODO Auto-generated method stub
     }
 
+    @Override
+    public void create(AccountEntity entity) throws DaoException {
+
+    }
+
+    @Override
+    public void update(AccountEntity entity) throws DaoException {
+
+    }
+
     public void delete(int id) {
         // TODO Auto-generated method stub
     }
 
-    public List<Account> getAll() throws DaoException {
+    public List<AccountEntity> getAll() throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Account> accounts;
+        List<AccountEntity> accounts;
         try {
             String query = "SELECT account.account_id, summa FROM account JOIN booking "
                     + "ON account.account_id=booking.account_id";

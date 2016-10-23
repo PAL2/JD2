@@ -3,7 +3,7 @@ package by.hotel.command.client;
 import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
-import by.hotel.entity.Account;
+import by.hotel.entity.AccountEntity;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
 import by.hotel.service.AccountServiceImpl;
@@ -24,7 +24,7 @@ public class UnpaidAccountCommand implements ActionCommand {
             int userId = user.getUserId();
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithAccountByUser(userId);
             request.setAttribute("bookingByUser", bookings);
-            List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
+            List<AccountEntity> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.unpaidAccounts");
         } catch (ServiceException | SQLException e) {

@@ -4,6 +4,7 @@ import by.hotel.command.ActionCommand;
 import by.hotel.command.ConfigurationManager;
 import by.hotel.command.MessageManager;
 import by.hotel.entity.Account;
+import by.hotel.entity.AccountEntity;
 import by.hotel.entity.Booking;
 import by.hotel.entity.User;
 import by.hotel.service.AccountServiceImpl;
@@ -24,7 +25,7 @@ public class AllAccountCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.allAccounts");
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithAccount();
             request.setAttribute("allBookings", bookings);
-            List<Account> accounts = AccountServiceImpl.getInstance().getAll();
+            List<AccountEntity> accounts = AccountServiceImpl.getInstance().getAll();
             request.setAttribute("allAccounts", accounts);
             List<User> users = UserServiceImpl.getInstance().getAll();
             request.setAttribute("allUsers", users);

@@ -1,14 +1,13 @@
 package by.hotel.entity;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
 @Table(name = "account", schema = "booking")
-public class AccountEntity {
+public class AccountEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

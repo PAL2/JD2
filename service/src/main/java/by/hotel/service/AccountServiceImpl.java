@@ -3,7 +3,7 @@ package by.hotel.service;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.AccountDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.Account;
+import by.hotel.entity.AccountEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 
@@ -29,8 +29,8 @@ public class AccountServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Account> getAll() throws SQLException, ServiceException {
-        List<Account> accounts;
+    public List<AccountEntity> getAll() throws SQLException, ServiceException {
+        List<AccountEntity> accounts;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -46,8 +46,8 @@ public class AccountServiceImpl extends AbstractService {
         return accounts;
     }
 
-    public List<Account> getAllAccountByUser(int userId) throws SQLException, ServiceException {
-        List<Account> accounts;
+    public List<AccountEntity> getAllAccountByUser(int userId) throws SQLException, ServiceException {
+        List<AccountEntity> accounts;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
