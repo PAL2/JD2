@@ -1,17 +1,14 @@
 package by.hotel.entity;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
 @Table(name = "user", schema = "booking")
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

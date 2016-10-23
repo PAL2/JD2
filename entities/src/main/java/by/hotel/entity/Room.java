@@ -2,7 +2,6 @@ package by.hotel.entity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Алексей on 16.10.2016.

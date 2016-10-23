@@ -1,7 +1,6 @@
 package by.hotel.entity;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**

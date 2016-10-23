@@ -1,6 +1,5 @@
 package by.hotel.service;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.AccountDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.AccountEntity;
