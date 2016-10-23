@@ -2,7 +2,6 @@ package by.hotel.dao;
 
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.Account;
 import by.hotel.entity.AccountEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -11,9 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
@@ -55,52 +52,27 @@ public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
     }
 
     public List<AccountEntity> getAllAccountByUser(int userId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         List<AccountEntity> accounts;
         try {
-            String query = "SELECT account.account_id, summa FROM account JOIN booking "
-                    + "ON account.account_id=booking.account_id WHERE booking.user_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, userId);
-            ResultSet resultSet = ps.executeQuery();
-            accounts = resultSetToAccountsList(resultSet);
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM AccountEntity WHERE bookingEntity.userId=?");
+            query.setParameter(0, userId);
+            accounts = query.list();
+            LOG.info(accounts);
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to create a list of accounts");
+            LOG.error("Unable to create a list of accounts");
             throw new DaoException();
         }
         return accounts;
     }
 
-    private List<AccountEntity> resultSetToAccountsList(ResultSet resultSet) throws SQLException {
-        List<AccountEntity> accounts = new ArrayList<>();
-        while (resultSet.next()) {
-            AccountEntity account = new AccountEntity();
-            account.setAccountId(resultSet.getInt(1));
-            account.setSumma(resultSet.getInt(2));
-            accounts.add(account);
-        }
-        return accounts;
-    }
-
-    public void create(Account entity) {
-        // TODO Auto-generated method stub
-    }
-
-    public void update(Account entity) {
-        // TODO Auto-generated method stub
-    }
-
     @Override
     public void create(AccountEntity entity) throws DaoException {
-
     }
 
     @Override
     public void update(AccountEntity entity) throws DaoException {
-
     }
 
     public void delete(int id) {
