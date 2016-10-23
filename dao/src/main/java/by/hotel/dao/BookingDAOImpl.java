@@ -271,7 +271,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         Connection conn = DBUtil.getConnection();
         Booking booking = new Booking();
         try {
-            String query = "SELECT booking_id, start_date, end_date, place, category, room_id, user_id, account_id, status FROM booking WHERE booking_id=?";
+            String query = "SELECT * FROM booking WHERE booking_id=?";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
             ps.setInt(1, bookingId);
             ResultSet resultSet = ps.executeQuery();

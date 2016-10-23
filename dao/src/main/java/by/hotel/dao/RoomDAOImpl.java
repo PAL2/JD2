@@ -53,6 +53,8 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Попробовать через LOAD()!!!
         Booking booking = BookingDAOImpl.getInstance().getBookingById(bookingId);
         Date startDate = Date.valueOf(booking.getStartDate());
         Date endDate = Date.valueOf(booking.getEndDate());
