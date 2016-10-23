@@ -70,7 +70,7 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         return accounts;
     }
 
-    public List<Account> resultSetToAccountsList(ResultSet resultSet) throws SQLException {
+    private List<Account> resultSetToAccountsList(ResultSet resultSet) throws SQLException {
         List<Account> accounts = new ArrayList<>();
         while (resultSet.next()) {
             Account account = new Account();

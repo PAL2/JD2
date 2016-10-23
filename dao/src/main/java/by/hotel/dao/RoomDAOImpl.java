@@ -3,6 +3,7 @@ package by.hotel.dao;
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Booking;
+import by.hotel.entity.BookingEntity;
 import by.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -45,19 +46,11 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(int bookingId) throws DaoException {
+    public List<Room> getAvailableRooms(BookingEntity booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
         List<Room> rooms;
-        try {
-            conn.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Попробовать через LOAD()!!!
-        Booking booking = BookingDAOImpl.getInstance().getBookingById(bookingId);
-        Date startDate = Date.valueOf(booking.getStartDate());
-        Date endDate = Date.valueOf(booking.getEndDate());
+        Date startDate = (Date) booking.getStartDate();
+        Date endDate = (Date) booking.getEndDate();
         try {
             String query = "(SELECT r.room_id, r.category, r.place, r.price FROM room AS r "
                     + "LEFT JOIN booking AS b ON (b.room_id=r.room_id) LEFT JOIN (SELECT room_id FROM booking AS b "

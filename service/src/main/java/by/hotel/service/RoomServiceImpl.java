@@ -2,6 +2,7 @@ package by.hotel.service;
 
 import by.hotel.dao.RoomDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
+import by.hotel.entity.BookingEntity;
 import by.hotel.entity.Room;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -47,13 +48,16 @@ public class RoomServiceImpl extends AbstractService {
     }
 
     public List<Room> getAvailableRooms(int bookingId) throws SQLException, ServiceException {
+        BookingEntity booking;
         List<Room> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            rooms = roomDAO.getAvailableRooms(bookingId);
+            booking = (BookingEntity) session.get(BookingEntity.class, bookingId);
+            rooms = roomDAO.getAvailableRooms(booking);
             transaction.commit();
+            LOG.info(booking);
             LOG.info(rooms);
         } catch (DaoException e) {
             transaction.rollback();

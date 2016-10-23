@@ -266,34 +266,4 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
         return bookings;
     }
-
-    public Booking getBookingById(int bookingId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
-        Booking booking = new Booking();
-        try {
-            String query = "SELECT * FROM booking WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, bookingId);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                booking.setBookingId(resultSet.getInt(1));
-                booking.setStartDate(resultSet.getDate(2).toLocalDate());
-                booking.setEndDate(resultSet.getDate(3).toLocalDate());
-                booking.setPlace(resultSet.getInt(4));
-                booking.setCategoryRoom(resultSet.getString(5));
-                booking.setRoomId(resultSet.getInt(6));
-                booking.setUserId(resultSet.getInt(7));
-                booking.setAccountId(resultSet.getInt(8));
-                booking.setStatus(resultSet.getString(9));
-            }
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
-            LOG.info("Failed to create a list bookings");
-            e.printStackTrace();
-            throw new DaoException();
-        }
-        return booking;
-
-    }
 }
