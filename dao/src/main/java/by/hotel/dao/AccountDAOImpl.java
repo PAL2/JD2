@@ -6,6 +6,9 @@ import by.hotel.entity.Account;
 import by.hotel.entity.AccountEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -105,19 +108,14 @@ public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
     }
 
     public List<AccountEntity> getAll() throws DaoException {
-        Connection conn = DBUtil.getConnection();
         List<AccountEntity> accounts;
         try {
-            String query = "SELECT account.account_id, summa FROM account JOIN booking "
-                    + "ON account.account_id=booking.account_id";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ResultSet resultSet = ps.executeQuery();
-            accounts = resultSetToAccountsList(resultSet);
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.info("Unable to create a list of accounts");
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM AccountEntity");
+            accounts = query.list();
+            LOG.info(accounts);
+        } catch (HibernateException e) {
+            LOG.error("Unable to create a list of accounts. Error in DAO");
             throw new DaoException();
         }
         return accounts;

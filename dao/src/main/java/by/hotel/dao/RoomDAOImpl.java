@@ -70,7 +70,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.info("Unable to create a list of matching numbers");
+            LOG.error("Unable to create a list of matching numbers");
             throw new DaoException();
         }
         return rooms;
@@ -83,6 +83,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             Session session = util.getSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
             rooms = query.list();
+            LOG.info(rooms);
         } catch (HibernateException e) {
             LOG.error("Unable to return list of clients. Error in DAO: ");
             throw new DaoException();

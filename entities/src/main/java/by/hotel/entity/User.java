@@ -3,6 +3,7 @@ package by.hotel.entity;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,7 +39,7 @@ public class User extends AbstractEntity{
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<BookingEntity> bookingEntities = new HashSet<BookingEntity>();
+    private List<BookingEntity> bookingEntities;
 
     public User() {
     }
@@ -52,7 +53,7 @@ public class User extends AbstractEntity{
     }
 
     public User(String firstName, String lastName, String userRole, String login, String password,
-                Set<BookingEntity> bookingEntities) {
+                List<BookingEntity> bookingEntities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userRole = userRole;
@@ -114,11 +115,11 @@ public class User extends AbstractEntity{
         this.password = password;
     }
 
-    public Set<BookingEntity> getBookingsEntities() {
+    public List<BookingEntity> getBookingsEntities() {
         return bookingEntities;
     }
 
-    public void setBookingsEntities(Set<BookingEntity> bookingEntities) {
+    public void setBookingsEntities(List<BookingEntity> bookingEntities) {
         this.bookingEntities = bookingEntities;
     }
 
@@ -158,7 +159,6 @@ public class User extends AbstractEntity{
                 ", lastName='" + lastName + '\'' +
                 ", userRole='" + userRole + '\'' +
                 ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

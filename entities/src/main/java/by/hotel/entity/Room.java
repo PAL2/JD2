@@ -1,6 +1,7 @@
 package by.hotel.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class Room extends AbstractEntity {
     private int price;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private Set<BookingEntity> bookingEntities;
+    private List<BookingEntity> bookingEntities;
 
     public Room() {
     }
@@ -38,7 +39,7 @@ public class Room extends AbstractEntity {
         this.price = price;
     }
 
-    public Room(String category, int place, int price, Set<BookingEntity> bookingEntities) {
+    public Room(String category, int place, int price, List<BookingEntity> bookingEntities) {
         this.category = category;
         this.place = place;
         this.price = price;
@@ -77,11 +78,11 @@ public class Room extends AbstractEntity {
         this.price = price;
     }
 
-    public Set<BookingEntity> getBookingEntities() {
+    public List<BookingEntity> getBookingEntities() {
         return bookingEntities;
     }
 
-    public void setBookingEntities(Set<BookingEntity> bookingEntities) {
+    public void setBookingEntities(List<BookingEntity> bookingEntities) {
         this.bookingEntities = bookingEntities;
     }
 
