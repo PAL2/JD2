@@ -6,6 +6,8 @@ import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.AccountEntity;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -31,14 +33,15 @@ public class AccountServiceImpl extends AbstractService {
 
     public List<AccountEntity> getAll() throws SQLException, ServiceException {
         List<AccountEntity> accounts;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             accounts = accountDAO.getAll();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(accounts);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
 
@@ -48,14 +51,15 @@ public class AccountServiceImpl extends AbstractService {
 
     public List<AccountEntity> getAllAccountByUser(int userId) throws SQLException, ServiceException {
         List<AccountEntity> accounts;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             accounts = accountDAO.getAllAccountByUser(userId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(accounts);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
