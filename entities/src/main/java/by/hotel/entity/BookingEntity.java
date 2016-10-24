@@ -1,4 +1,4 @@
-package by.hotel.entity;
+package com.hotel.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -209,5 +209,20 @@ public class BookingEntity {
         result = 31 * result + (accountId != null ? accountId.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingEntity{" +
+                "bookingId=" + bookingId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", place=" + place +
+                ", category='" + category + '\'' +
+                ", roomId=" + roomId +
+                ", userId=" + userId +
+                ", accountId=" + accountId +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
