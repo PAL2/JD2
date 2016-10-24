@@ -18,7 +18,7 @@ public class Account extends AbstractEntity {
     @Column(name = "summa", nullable = false)
     private int summa;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountEntity", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.ALL)
     private BookingEntity bookingEntity;
 
     public Account() {
