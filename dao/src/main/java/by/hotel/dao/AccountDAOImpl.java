@@ -30,6 +30,10 @@ public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
     public void addAccount(int bookingId) throws DaoException, SQLException {
         Connection conn = DBUtil.getConnection();
         try {
+            //INSERT INTO AccountEntity (summa) SELECT roomId*2 FROM BookingEntity WHERE bookingId=62
+            //SELECT (B.endDate-B.startDate)*B.roomId FROM BookingEntity B WHERE bookingId=62
+            // SELECT R.price FROM Room R WHERE R.roomId=13
+
             String query = "INSERT INTO account (account_id, summa) VALUES (NULL, (SELECT (end_date-start_date)*price as duration FROM booking "
                     + "JOIN room USING (room_id) WHERE booking_id=?))";
             conn.setAutoCommit(false);
