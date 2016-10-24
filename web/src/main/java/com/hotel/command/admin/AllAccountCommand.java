@@ -3,7 +3,7 @@ package com.hotel.command.admin;
 import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
-import com.hotel.entity.AccountEntity;
+import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.AccountServiceImpl;
@@ -24,7 +24,7 @@ public class AllAccountCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.allAccounts");
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithAccount();
             request.setAttribute("allBookings", bookings);
-            List<AccountEntity> accounts = AccountServiceImpl.getInstance().getAll();
+            List<Account> accounts = AccountServiceImpl.getInstance().getAll();
             request.setAttribute("allAccounts", accounts);
             List<User> users = UserServiceImpl.getInstance().getAll();
             request.setAttribute("allUsers", users);

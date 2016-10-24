@@ -2,7 +2,7 @@ package com.hotel.service;
 
 import com.hotel.dao.AccountDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.entity.AccountEntity;
+import com.hotel.entity.Account;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -30,8 +30,8 @@ public class AccountServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<AccountEntity> getAll() throws SQLException, ServiceException {
-        List<AccountEntity> accounts;
+    public List<Account> getAll() throws SQLException, ServiceException {
+        List<Account> accounts;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -48,8 +48,8 @@ public class AccountServiceImpl extends AbstractService {
         return accounts;
     }
 
-    public List<AccountEntity> getAllAccountByUser(int userId) throws SQLException, ServiceException {
-        List<AccountEntity> accounts;
+    public List<Account> getAllAccountByUser(int userId) throws SQLException, ServiceException {
+        List<Account> accounts;
         Session session = util.getSession();
         Transaction transaction = null;
         try {

@@ -13,7 +13,7 @@
     <property name="format_sql">true</property>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
-    <mapping class="com.hotel.entity.AccountEntity"/>
+    <mapping class="com.hotel.entity.Account"/>
     <mapping class="com.hotel.entity.BookingEntity"/>
     <mapping class="com.hotel.entity.Room"/>
     <mapping class="com.hotel.entity.User"/>

@@ -59,14 +59,14 @@ public class BookingEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
-    private AccountEntity accountEntity;
+    private Account account;
 
     public BookingEntity() {
     }
 
     public BookingEntity(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
                          Integer accountId, String status, Room room,
-                         User user, AccountEntity accountEntity) {
+                         User user, Account account) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.place = place;
@@ -77,7 +77,7 @@ public class BookingEntity {
         this.status = status;
         this.room = room;
         this.user = user;
-        this.accountEntity = accountEntity;
+        this.account = account;
     }
 
 
@@ -169,12 +169,12 @@ public class BookingEntity {
         this.user = user;
     }
 
-    public AccountEntity getAccountEntity() {
-        return accountEntity;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountEntity(AccountEntity accountEntity) {
-        this.accountEntity = accountEntity;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

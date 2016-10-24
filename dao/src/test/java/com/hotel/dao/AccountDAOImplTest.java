@@ -1,18 +1,10 @@
 package com.hotel.dao;
 
-import com.hotel.entity.Account;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-
 /**
  * Created by Алексей on 05.10.2016.
  */
 public class AccountDAOImplTest {
-    private Account expected;
+    /*private Account expected;
 
     @Before
     public void setUp() {
@@ -29,6 +21,6 @@ public class AccountDAOImplTest {
         AccountDAOImpl instance1 = AccountDAOImpl.getInstance();
         AccountDAOImpl instance2 = AccountDAOImpl.getInstance();
         assertEquals(instance1.hashCode(), instance2.hashCode());
-    }
+    }*/
 
 }
