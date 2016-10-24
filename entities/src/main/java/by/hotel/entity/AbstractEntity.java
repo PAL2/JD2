@@ -1,4 +1,4 @@
-package com.hotel.entity;
+package by.hotel.entity;
 
 public abstract class AbstractEntity {
 

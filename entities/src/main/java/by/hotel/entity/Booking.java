@@ -1,4 +1,4 @@
-package com.hotel.entity;
+package by.hotel.entity;
 
 import java.time.LocalDate;
 

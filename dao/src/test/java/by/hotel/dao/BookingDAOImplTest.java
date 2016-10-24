@@ -3,9 +3,6 @@ package by.hotel.dao;
 import by.hotel.entity.Booking;
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 import static org.junit.Assert.assertEquals;
 
 /**

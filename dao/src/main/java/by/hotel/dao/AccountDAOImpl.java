@@ -1,15 +1,13 @@
 package by.hotel.dao;
 
-import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.AccountEntity;
-import com.mysql.jdbc.PreparedStatement;
+import by.hotel.entity.BookingEntity;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,28 +25,18 @@ public class AccountDAOImpl implements AbstractDAO<AccountEntity> {
         return instance;
     }
 
-    public void addAccount(int bookingId) throws DaoException, SQLException {
-        Connection conn = DBUtil.getConnection();
+    public void addAccount(int summa, BookingEntity booking) throws DaoException, SQLException {
+        AccountEntity account = new AccountEntity();
         try {
-            //INSERT INTO AccountEntity (summa) SELECT roomId*2 FROM BookingEntity WHERE bookingId=62
-            //SELECT (B.endDate-B.startDate)*B.roomId FROM BookingEntity B WHERE bookingId=62
-            // SELECT R.price FROM Room R WHERE R.roomId=13
-
-            String query = "INSERT INTO account (account_id, summa) VALUES (NULL, (SELECT (end_date-start_date)*price as duration FROM booking "
-                    + "JOIN room USING (room_id) WHERE booking_id=?))";
-            conn.setAutoCommit(false);
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, bookingId);
-            ps.executeUpdate();
-            ps.close();
-            query = "UPDATE booking SET account_id=LAST_INSERT_ID() WHERE booking_id=?";
-            ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, bookingId);
-            ps.executeUpdate();
-            conn.commit();
-            ps.close();
-        } catch (SQLException e) {
-            conn.rollback();
+            Session session = util.getSession();
+            account.setSumma(summa);
+            booking.setStatus("billed");
+            account.setBookingEntity(booking);
+            booking.setAccountEntity(account);
+            session.save(booking);
+            session.save(account);
+            LOG.info(account);
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Unable to add account");
             throw new DaoException();

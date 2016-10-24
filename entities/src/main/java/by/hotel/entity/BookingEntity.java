@@ -1,4 +1,4 @@
-package com.hotel.entity;
+package by.hotel.entity;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -2,7 +2,6 @@ package by.hotel.dao;
 
 import by.hotel.connect.DBUtil;
 import by.hotel.dao.exceptions.DaoException;
-import by.hotel.entity.Booking;
 import by.hotel.entity.BookingEntity;
 import by.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;

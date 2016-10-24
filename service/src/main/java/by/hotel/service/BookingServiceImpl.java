@@ -5,11 +5,16 @@ import by.hotel.dao.AccountDAOImpl;
 import by.hotel.dao.BookingDAOImpl;
 import by.hotel.dao.exceptions.DaoException;
 import by.hotel.entity.Booking;
+import by.hotel.entity.BookingEntity;
+import by.hotel.entity.Room;
 import by.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,15 +70,31 @@ public class BookingServiceImpl extends AbstractService {
     }
 
     public void chooseRoom(int bookingId, int roomId) throws SQLException, ServiceException {
+        BookingEntity booking;
+        Room room;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.chooseRoom(bookingId, roomId);
-            accountDAO.addAccount(bookingId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            booking = (BookingEntity) session.get(BookingEntity.class, bookingId);
+            System.out.println(booking);
+            transaction.commit();
+            System.out.println(booking);
+            transaction = session.beginTransaction();
+            System.out.println(booking.getRoomId());
+            room = (Room) session.get(Room.class, booking.getRoomId());
+            Date startDate = booking.getStartDate();
+            Date endDate = booking.getEndDate();
+            long st = startDate.getTime();
+            long en = endDate.getTime();
+            int summa = (int) ((en - st) / 24 / 60 / 60 / 1000) * room.getPrice();
+            accountDAO.addAccount(summa, booking);
+            transaction.commit();
+            LOG.info(booking);
+            LOG.info(room);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }

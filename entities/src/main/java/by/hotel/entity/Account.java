@@ -1,4 +1,4 @@
-package com.hotel.entity;
+package by.hotel.entity;
 
 public class Account extends AbstractEntity {
 

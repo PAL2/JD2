@@ -1,9 +1,10 @@
 package by.hotel.util;
 
-import by.hotel.entity.User;
-import org.hibernate.HibernateException;
+import by.hotel.entity.BookingEntity;
+import by.hotel.entity.Room;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import static by.hotel.dao.AbstractDAO.util;
 
@@ -53,19 +54,69 @@ public class TestApp {
         rooms = query.list();
         System.out.println(rooms);
         transaction.commit();*/
-        String login = "admin";
-        String password = "21232f297a57a5a743894a0e4a801fc3";
-
+       /* BookingEntity booking;
+        Room room;
         try {
-            User user;
+
             Session session = util.getSession();
-            Query query = session.createQuery("FROM User WHERE login= :login AND password = :password");
-            query.setParameter("login", login);
-            query.setParameter("password", password);
-            user = (User) query.uniqueResult();
-            System.out.println(user);
+            session.beginTransaction();
+            booking = (BookingEntity) session.get(BookingEntity.class, 62);
+            room = (Room) session.get(Room.class, booking.getRoomId());
+            Date startDate = booking.getStartDate();
+            Date endDate = booking.getEndDate();
+            long st = startDate.getTime();
+            long en = endDate.getTime();
+            System.out.println((en - st) / 24 / 60 / 60 / 1000);
+            AccountEntity account = new AccountEntity();
+            System.out.println((int) ((en - st) / 24 / 60 / 60 / 1000) * room.getPrice());
+            //account.setSumma((int) ((en - st) / 24 / 60 / 60 / 1000)*room.getPrice());
+            account.setSumma(123);
+          //  booking.setAccountId(43);
+            account.setBookingEntity(booking);
+            booking.setAccountEntity(account);
+            session.save(account);
+            session.save(booking);
+            session.close();
+            System.out.println(booking);
         } catch (HibernateException e) {
 
-        }
+        }*/
+
+        Room room;
+        BookingEntity booking;
+        Session session = util.getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("UPDATE BookingEntity B SET B.roomId=13, B.status=12 WHERE B.bookingId=62");
+        int q = query.executeUpdate();
+        System.out.println(q);
+        // query.setParameter(0, userId);
+        // accounts = query.list();
+        // LOG.info(accounts);
+           /* booking = (BookingEntity) session.get(BookingEntity.class, 62);
+            System.out.println(booking);
+            transaction.commit();
+            session.flush();
+            transaction = session.beginTransaction();
+            System.out.println();
+            System.out.println(booking.getRoomId());
+            room = (Room) session.get(Room.class, booking.getRoomId());
+            Date startDate = booking.getStartDate();
+            Date endDate = booking.getEndDate();
+            long st = startDate.getTime();
+            long en = endDate.getTime();
+
+            AccountEntity accountEntity = new AccountEntity();
+            accountEntity.setSumma((int) ((en - st) / 24 / 60 / 60 / 1000) * room.getPrice());
+
+            System.out.println(booking);
+            booking.setStatus("billed");
+
+            accountEntity.setBookingEntity(booking);
+            booking.setAccountEntity(accountEntity);
+
+            session.save(booking);
+            session.save(accountEntity);*/
+        transaction.commit();
+
     }
 }
