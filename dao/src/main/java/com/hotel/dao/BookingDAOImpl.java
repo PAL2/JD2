@@ -5,6 +5,9 @@ import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -86,16 +89,15 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
     }
 
     public void chooseRoom(int bookingId, int roomId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         try {
-            String query = "UPDATE booking SET room_id=?, status=? WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, roomId);
-            ps.setString(2, "billed");
-            ps.setInt(3, bookingId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("UPDATE BookingEntity B SET B.roomId=:roomId, B.status=:status " +
+                    "WHERE B.bookingId=:bookingId");
+            query.setParameter("roomId", roomId);
+            query.setParameter("status", "billed");
+            query.setParameter("bookingId", bookingId);
+            query.executeUpdate();
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("Failed to assign the appropriate booking number");
             throw new DaoException();

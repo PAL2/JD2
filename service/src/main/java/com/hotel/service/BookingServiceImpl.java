@@ -78,11 +78,6 @@ public class BookingServiceImpl extends AbstractService {
             transaction = session.beginTransaction();
             bookingDAO.chooseRoom(bookingId, roomId);
             booking = (BookingEntity) session.get(BookingEntity.class, bookingId);
-            System.out.println(booking);
-            transaction.commit();
-            System.out.println(booking);
-            transaction = session.beginTransaction();
-            System.out.println(booking.getRoomId());
             room = (Room) session.get(Room.class, booking.getRoomId());
             Date startDate = booking.getStartDate();
             Date endDate = booking.getEndDate();
