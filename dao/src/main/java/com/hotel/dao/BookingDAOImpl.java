@@ -3,6 +3,7 @@ package com.hotel.dao;
 import com.hotel.connect.DBUtil;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.BookingEntity;
+import com.hotel.entity.User;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -36,24 +37,23 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
 
     public void addBooking(int userId, int place, String category, LocalDate startDate, LocalDate endDate)
             throws DaoException {
-        Connection conn = DBUtil.getConnection();
         Date sqlStartDate = Date.valueOf(startDate);
         Date sqlEndDate = Date.valueOf(endDate);
         try {
-            String query = "INSERT INTO booking (user_id, place, category, start_date, end_date, status) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, userId);
-            ps.setInt(2, place);
-            ps.setString(3, category);
-            ps.setDate(4, sqlStartDate);
-            ps.setDate(5, sqlEndDate);
-            ps.setString(6, "new");
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            User user = (User) session.get(User.class, userId);
+            BookingEntity bookingEntity = new BookingEntity();
+            bookingEntity.setUserId(userId);
+            bookingEntity.setPlace(place);
+            bookingEntity.setCategory(category);
+            bookingEntity.setStartDate(sqlStartDate);
+            bookingEntity.setEndDate(sqlEndDate);
+            bookingEntity.setStatus("new");
+            bookingEntity.setUser(user);
+            session.save(bookingEntity);
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to add a booking");
+            LOG.info("Unable to add a booking. Error in DAO");
             throw new DaoException();
         }
     }
@@ -111,7 +111,7 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     public List<BookingEntity> getAllBookingByUser(int userId) throws DaoException {
         List<BookingEntity> bookings;
         try {
-            Session session =  util.getSession();
+            Session session = util.getSession();
             Query query = session.createQuery("FROM BookingEntity B WHERE B.userId=?");
             query.setParameter(0, userId);
             bookings = query.list();
