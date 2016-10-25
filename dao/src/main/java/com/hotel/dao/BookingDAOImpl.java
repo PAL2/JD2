@@ -1,10 +1,8 @@
 package com.hotel.dao;
 
-import com.hotel.connect.DBUtil;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.BookingEntity;
 import com.hotel.entity.User;
-import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -12,12 +10,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
@@ -57,25 +51,7 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
             throw new DaoException();
         }
     }
-
-    private List<BookingEntity> resultSetToBookingsList(ResultSet resultSet) throws SQLException {
-        List<BookingEntity> bookings = new ArrayList<>();
-        while (resultSet.next()) {
-            BookingEntity booking = new BookingEntity();
-            booking.setBookingId(resultSet.getInt(1));
-            booking.setStartDate(resultSet.getDate(2));
-            booking.setEndDate(resultSet.getDate(3));
-            booking.setPlace(resultSet.getInt(4));
-            booking.setCategory(resultSet.getString(5));
-            booking.setRoomId(resultSet.getInt(6));
-            booking.setUserId(resultSet.getInt(7));
-            booking.setAccountId(resultSet.getInt(8));
-            booking.setStatus(resultSet.getString(9));
-            bookings.add(booking);
-        }
-        return bookings;
-    }
-
+    
     public List<BookingEntity> getAllNewBooking() throws DaoException {
         List<BookingEntity> bookings;
         try {
@@ -153,19 +129,18 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     }
 
     public List<BookingEntity> getAllBookingWithAccountByUser(int userId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         List<BookingEntity> bookings;
         try {
-            String query = "SELECT * FROM booking WHERE account_id!=0 AND status=\"billed\" AND user_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, userId);
-            ResultSet resultSet = ps.executeQuery();
-            bookings = resultSetToBookingsList(resultSet);
-            resultSet.close();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM BookingEntity B " +
+                    "WHERE B.accountId!=0 AND B.status=:status AND B.userId=:userId");
+            query.setParameter("status", "billed");
+            query.setParameter("userId", userId);
+            bookings = query.list();
+            LOG.info(bookings);
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Failed to create a list of bookings with the invoice for the customer");
+            LOG.error("Failed to create a list of bookings with the invoice for the customer. Error in DAO");
             throw new DaoException();
         }
         return bookings;
