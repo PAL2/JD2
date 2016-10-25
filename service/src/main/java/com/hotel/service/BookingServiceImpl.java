@@ -1,6 +1,5 @@
 package com.hotel.service;
 
-import com.hotel.connect.DBUtil;
 import com.hotel.dao.AccountDAOImpl;
 import com.hotel.dao.BookingDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
