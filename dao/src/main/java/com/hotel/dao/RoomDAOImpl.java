@@ -2,7 +2,7 @@ package com.hotel.dao;
 
 import com.hotel.connect.DBUtil;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.entity.BookingEntity;
+import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -45,7 +45,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(BookingEntity booking) throws DaoException {
+    public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
         List<Room> rooms;
         Date startDate = (Date) booking.getStartDate();
@@ -65,7 +65,6 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             ResultSet resultSet = ps.executeQuery();
             rooms = resultSetToRoomsList(resultSet);
             resultSet.close();
-            conn.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,6 +80,8 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         try {
             Session session = util.getSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
+            query.setFirstResult(0);
+            query.setMaxResults(6);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {

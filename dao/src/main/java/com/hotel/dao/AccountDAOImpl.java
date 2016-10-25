@@ -2,7 +2,7 @@ package com.hotel.dao;
 
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Account;
-import com.hotel.entity.BookingEntity;
+import com.hotel.entity.Booking;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -25,20 +25,20 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         return instance;
     }
 
-    public void addAccount(int summa, BookingEntity booking) throws DaoException, SQLException {
+    public void addAccount(int summa, Booking booking) throws DaoException, SQLException {
         Account account = new Account();
         try {
             Session session = util.getSession();
             account.setSumma(summa);
             booking.setStatus("billed");
-            account.setBookingEntity(booking);
+            account.setBooking(booking);
             booking.setAccount(account);
             session.save(booking);
             session.save(account);
             LOG.info(account);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to add account");
+            LOG.info("Unable to add account. Error in DAO");
             throw new DaoException();
         }
     }
@@ -47,13 +47,13 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         List<Account> accounts;
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("FROM Account WHERE bookingEntity.userId=?");
+            Query query = session.createQuery("FROM Account WHERE booking.userId=?");
             query.setParameter(0, userId);
             accounts = query.list();
             LOG.info(accounts);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.error("Unable to create a list of accounts");
+            LOG.error("Unable to create a list of accounts. Error in DAO");
             throw new DaoException();
         }
         return accounts;

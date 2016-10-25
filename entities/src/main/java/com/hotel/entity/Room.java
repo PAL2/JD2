@@ -27,7 +27,7 @@ public class Room extends AbstractEntity {
     private int price;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<BookingEntity> bookingEntities;
+    private List<Booking> bookingEntities;
 
     public Room() {
     }
@@ -38,7 +38,7 @@ public class Room extends AbstractEntity {
         this.price = price;
     }
 
-    public Room(String category, int place, int price, List<BookingEntity> bookingEntities) {
+    public Room(String category, int place, int price, List<Booking> bookingEntities) {
         this.category = category;
         this.place = place;
         this.price = price;
@@ -77,11 +77,11 @@ public class Room extends AbstractEntity {
         this.price = price;
     }
 
-    public List<BookingEntity> getBookingEntities() {
+    public List<Booking> getBookingEntities() {
         return bookingEntities;
     }
 
-    public void setBookingEntities(List<BookingEntity> bookingEntities) {
+    public void setBookingEntities(List<Booking> bookingEntities) {
         this.bookingEntities = bookingEntities;
     }
 

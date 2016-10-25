@@ -18,8 +18,8 @@ public class Account extends AbstractEntity {
     @Column(name = "summa", nullable = false)
     private int summa;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.ALL)
-    private BookingEntity bookingEntity;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "account")
+    private Booking booking;
 
     public Account() {
     }
@@ -28,9 +28,9 @@ public class Account extends AbstractEntity {
         this.summa = summa;
     }
 
-    public Account(int summa, BookingEntity bookingEntity) {
+    public Account(int summa, Booking booking) {
         this.summa = summa;
-        this.bookingEntity = bookingEntity;
+        this.booking = booking;
     }
 
     public Integer getAccountId() {
@@ -49,12 +49,12 @@ public class Account extends AbstractEntity {
         this.summa = summa;
     }
 
-    public BookingEntity getBookingEntity() {
-        return bookingEntity;
+    public Booking getBooking() {
+        return booking;
     }
 
-    public void setBookingEntity(BookingEntity bookingEntity) {
-        this.bookingEntity = bookingEntity;
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
     @Override
