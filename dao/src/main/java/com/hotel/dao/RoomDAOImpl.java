@@ -65,7 +65,6 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             ResultSet resultSet = ps.executeQuery();
             rooms = resultSetToRoomsList(resultSet);
             resultSet.close();
-            conn.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();

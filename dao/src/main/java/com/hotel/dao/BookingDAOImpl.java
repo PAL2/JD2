@@ -127,9 +127,9 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     public void rejectBooking(int bookingId) throws DaoException {
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("UPDATE BookingEntity B SET B.status=? WHERE B.bookingId=?");
-            query.setParameter(0, "rejected");
-            query.setParameter(1, bookingId);
+            Query query = session.createQuery("UPDATE BookingEntity B SET B.status=:status WHERE B.bookingId=:bookingId");
+            query.setParameter("status", "rejected");
+            query.setParameter("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -172,31 +172,27 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     }
 
     public void payBooking(int bookingId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         try {
-            String query = "UPDATE booking SET status=? WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, "paid");
-            ps.setInt(2, bookingId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("UPDATE BookingEntity B SET B.status=:status WHERE B.bookingId=:bookingId");
+            query.setString("status", "paid");
+            query.setInteger("bookingId", bookingId);
+            query.executeUpdate();
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to pay for a booking");
+            LOG.error("Unable to pay for a booking. Error in DAO");
             throw new DaoException();
         }
     }
 
     public void refuseBooking(int bookingId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         try {
-            String query = "UPDATE booking SET status=? WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setString(1, "refused");
-            ps.setInt(2, bookingId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("UPDATE BookingEntity B SET B.status=:status WHERE B.bookingId=:bookingId");
+            query.setString("status", "refused");
+            query.setInteger("bookingId", bookingId);
+            query.executeUpdate();
+        } catch (HibernateException e) {
             e.printStackTrace();
             LOG.info("The client was unable to refuse the book");
             throw new DaoException();
