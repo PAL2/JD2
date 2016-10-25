@@ -37,14 +37,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAllBookingWithAccount() throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAllBookingWithAccount();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -53,14 +54,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAll() throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAll();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -95,14 +97,15 @@ public class BookingServiceImpl extends AbstractService {
     }
 
     public void delete(int bookingId) throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.delete(bookingId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info("Deleting is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -110,14 +113,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAllNewBooking() throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAllNewBooking();
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -125,14 +129,15 @@ public class BookingServiceImpl extends AbstractService {
     }
 
     public void rejectBooking(int bookingId) throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.rejectBooking(bookingId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info("Rejecting is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -140,14 +145,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAllBookingWithFinishedAccount(userId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -156,14 +162,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAllBookingByUser(int userId) throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAllBookingByUser(userId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -172,42 +179,45 @@ public class BookingServiceImpl extends AbstractService {
 
     public void addBooking(LocalDate startDate, LocalDate endDate, int userId, int place, String category)
             throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.addBooking(userId, place, category, startDate, endDate);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info("Booking added is successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
 
     public void payBooking(int bookingId) throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.payBooking(bookingId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info("Booking is paid successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
 
     public void refuseBooking(int bookingId) throws SQLException, ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookingDAO.refuseBooking(bookingId);
-            conn.commit();
+            transaction.commit();
             LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
@@ -215,14 +225,15 @@ public class BookingServiceImpl extends AbstractService {
 
     public List<BookingEntity> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
         List<BookingEntity> bookings;
+        Session session = util.getSession();
+        Transaction transaction = null;
         try {
-            conn = DBUtil.getConnection();
-            conn.setAutoCommit(false);
+            transaction = session.beginTransaction();
             bookings = bookingDAO.getAllBookingWithAccountByUser(userId);
-            conn.commit();
-            LOG.info("Transaction is completed successfully");
-        } catch (SQLException | DaoException e) {
-            conn.rollback();
+            transaction.commit();
+            LOG.info(bookings);
+        } catch (DaoException e) {
+            transaction.rollback();
             LOG.info("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
