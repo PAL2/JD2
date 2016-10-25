@@ -4,6 +4,7 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
+import com.hotel.entity.BookingEntity;
 import com.hotel.entity.User;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.UserServiceImpl;
@@ -30,7 +31,7 @@ public class LoginCommand implements ActionCommand {
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
                     page = ConfigurationManager.getProperty("path.page.admin");
                     request.getSession().setAttribute("isAdmin", true);
-                    List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+                    List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
                     request.setAttribute("newBooking", bookings);
                 } else {
                     page = ConfigurationManager.getProperty("path.page.order");

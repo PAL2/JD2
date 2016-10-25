@@ -4,7 +4,6 @@ import com.hotel.connect.DBUtil;
 import com.hotel.dao.AccountDAOImpl;
 import com.hotel.dao.BookingDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.entity.Booking;
 import com.hotel.entity.BookingEntity;
 import com.hotel.entity.Room;
 import com.hotel.service.exceptions.ServiceException;
@@ -36,8 +35,8 @@ public class BookingServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Booking> getAllBookingWithAccount() throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAllBookingWithAccount() throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -52,8 +51,8 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<Booking> getAll() throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAll() throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -109,8 +108,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllNewBooking() throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAllNewBooking() throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -139,8 +138,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -155,8 +154,8 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<Booking> getAllBookingByUser(int userId) throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAllBookingByUser(int userId) throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
@@ -214,8 +213,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
-        List<Booking> bookings;
+    public List<BookingEntity> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
+        List<BookingEntity> bookings;
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);

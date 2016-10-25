@@ -4,6 +4,7 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
+import com.hotel.entity.BookingEntity;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -22,7 +23,7 @@ public class DeleteBookingCommand implements ActionCommand {
         try {
             page = ConfigurationManager.getProperty("path.page.allBookings");
             BookingServiceImpl.getInstance().delete(bookingId);
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAll();
+            List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAll();
             request.setAttribute("allBooking", bookings);
             LOG.info("Booking № " + bookingId + " was deleted");
         } catch (ServiceException | SQLException e) {

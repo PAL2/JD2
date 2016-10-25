@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "booking", schema = "booking")
-public class BookingEntity {
+public class BookingEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

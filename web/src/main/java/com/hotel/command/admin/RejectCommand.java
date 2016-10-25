@@ -3,7 +3,7 @@ package com.hotel.command.admin;
 import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
-import com.hotel.entity.Booking;
+import com.hotel.entity.BookingEntity;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -22,7 +22,7 @@ public class RejectCommand implements ActionCommand {
         try {
             page = ConfigurationManager.getProperty("path.page.admin");
             BookingServiceImpl.getInstance().rejectBooking(bookingId);
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+            List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");

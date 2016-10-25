@@ -2,7 +2,7 @@ package com.hotel.dao;
 
 import com.hotel.connect.DBUtil;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.entity.Booking;
+import com.hotel.entity.BookingEntity;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingDAOImpl implements AbstractDAO<Booking> {
+public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     private static BookingDAOImpl instance;
 
     private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
@@ -53,15 +53,15 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
-    private List<Booking> resultSetToBookingsList(ResultSet resultSet) throws SQLException {
-        List<Booking> bookings = new ArrayList<>();
+    private List<BookingEntity> resultSetToBookingsList(ResultSet resultSet) throws SQLException {
+        List<BookingEntity> bookings = new ArrayList<>();
         while (resultSet.next()) {
-            Booking booking = new Booking();
+            BookingEntity booking = new BookingEntity();
             booking.setBookingId(resultSet.getInt(1));
-            booking.setStartDate(resultSet.getDate(2).toLocalDate());
-            booking.setEndDate(resultSet.getDate(3).toLocalDate());
+            booking.setStartDate(resultSet.getDate(2));
+            booking.setEndDate(resultSet.getDate(3));
             booking.setPlace(resultSet.getInt(4));
-            booking.setCategoryRoom(resultSet.getString(5));
+            booking.setCategory(resultSet.getString(5));
             booking.setRoomId(resultSet.getInt(6));
             booking.setUserId(resultSet.getInt(7));
             booking.setAccountId(resultSet.getInt(8));
@@ -71,9 +71,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
-    public List<Booking> getAllNewBooking() throws DaoException {
+    public List<BookingEntity> getAllNewBooking() throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM booking WHERE status=\"new\"");
@@ -104,9 +104,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
-    public List<Booking> getAllBookingByUser(int userId) throws DaoException {
+    public List<BookingEntity> getAllBookingByUser(int userId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             String query = "SELECT * FROM booking WHERE user_id=?";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
@@ -139,9 +139,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
-    public List<Booking> getAllBookingWithAccount() throws DaoException {
+    public List<BookingEntity> getAllBookingWithAccount() throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM booking WHERE account_id!=0");
@@ -156,9 +156,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws DaoException {
+    public List<BookingEntity> getAllBookingWithAccountByUser(int userId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             String query = "SELECT * FROM booking WHERE account_id!=0 AND status=\"billed\" AND user_id=?";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
@@ -207,9 +207,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
-    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws DaoException {
+    public List<BookingEntity> getAllBookingWithFinishedAccount(int userId) throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             String query = "SELECT * FROM booking WHERE account_id!=0 AND (status=\"paid\" OR status=\"refused\") AND user_id=?";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
@@ -227,13 +227,13 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
     }
 
     @Override
-    public void create(Booking entity) {
-        // TODO Auto-generated method stub
+    public void create(BookingEntity entity) throws DaoException {
+
     }
 
     @Override
-    public void update(Booking entity) {
-        // TODO Auto-generated method stub
+    public void update(BookingEntity entity) throws DaoException {
+
     }
 
     @Override
@@ -252,9 +252,9 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
-    public List<Booking> getAll() throws DaoException {
+    public List<BookingEntity> getAll() throws DaoException {
         Connection conn = DBUtil.getConnection();
-        List<Booking> bookings;
+        List<BookingEntity> bookings;
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM booking");
