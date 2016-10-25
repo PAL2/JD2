@@ -4,7 +4,6 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.entity.BookingEntity;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -24,7 +23,7 @@ public class BillCommand implements ActionCommand {
         try {
             page = ConfigurationManager.getProperty("path.page.admin");
             BookingServiceImpl.getInstance().chooseRoom(bookingId, roomId);
-            List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+            List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
             LOG.info("Booking № " + bookingId + " confirmed and sent account");
         } catch (ServiceException | SQLException e) {

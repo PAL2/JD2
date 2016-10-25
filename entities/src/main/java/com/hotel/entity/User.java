@@ -36,7 +36,7 @@ public class User extends AbstractEntity {
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<BookingEntity> bookingEntities;
+    private List<Booking> bookingEntities;
 
     public User() {
     }
@@ -50,7 +50,7 @@ public class User extends AbstractEntity {
     }
 
     public User(String firstName, String lastName, String userRole, String login, String password,
-                List<BookingEntity> bookingEntities) {
+                List<Booking> bookingEntities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userRole = userRole;
@@ -112,11 +112,11 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public List<BookingEntity> getBookingsEntities() {
+    public List<Booking> getBookingsEntities() {
         return bookingEntities;
     }
 
-    public void setBookingsEntities(List<BookingEntity> bookingEntities) {
+    public void setBookingsEntities(List<Booking> bookingEntities) {
         this.bookingEntities = bookingEntities;
     }
 

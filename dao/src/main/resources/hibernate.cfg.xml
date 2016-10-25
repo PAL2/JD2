@@ -14,7 +14,7 @@
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
     <mapping class="com.hotel.entity.Account"/>
-    <mapping class="com.hotel.entity.BookingEntity"/>
+    <mapping class="com.hotel.entity.Booking"/>
     <mapping class="com.hotel.entity.Room"/>
     <mapping class="com.hotel.entity.User"/>
   </session-factory>

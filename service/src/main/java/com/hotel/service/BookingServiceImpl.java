@@ -3,7 +3,7 @@ package com.hotel.service;
 import com.hotel.dao.AccountDAOImpl;
 import com.hotel.dao.BookingDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.entity.BookingEntity;
+import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
@@ -34,8 +34,8 @@ public class BookingServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<BookingEntity> getAllBookingWithAccount() throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAllBookingWithAccount() throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -51,8 +51,8 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<BookingEntity> getAll() throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAll() throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -70,14 +70,14 @@ public class BookingServiceImpl extends AbstractService {
     }
 
     public void chooseRoom(int bookingId, int roomId) throws SQLException, ServiceException {
-        BookingEntity booking;
+        Booking booking;
         Room room;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             bookingDAO.chooseRoom(bookingId, roomId);
-            booking = (BookingEntity) session.get(BookingEntity.class, bookingId);
+            booking = (Booking) session.get(Booking.class, bookingId);
             room = (Room) session.get(Room.class, booking.getRoomId());
             Date startDate = booking.getStartDate();
             Date endDate = booking.getEndDate();
@@ -110,8 +110,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<BookingEntity> getAllNewBooking() throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAllNewBooking() throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -142,8 +142,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<BookingEntity> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -159,8 +159,8 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<BookingEntity> getAllBookingByUser(int userId) throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAllBookingByUser(int userId) throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -222,8 +222,8 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<BookingEntity> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
-        List<BookingEntity> bookings;
+    public List<Booking> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
+        List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
         try {

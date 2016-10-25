@@ -1,6 +1,5 @@
 package com.hotel.dao;
 
-import com.hotel.entity.Booking;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +8,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Алексей on 06.10.2016.
  */
 public class BookingDAOImplTest {
-    private Booking expected;
+    // private Booking expected;
 
     public void setBooking() {
         //expected = new Booking(1, 2011-02-12, 2012-01-22, 2, "lux", 1, 1, 1, "new");

@@ -3,7 +3,7 @@ package com.hotel.command.client;
 import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
-import com.hotel.entity.BookingEntity;
+import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
@@ -24,7 +24,7 @@ public class MyBookingCommand implements ActionCommand {
         String login = user.getLogin();
         try {
             page = ConfigurationManager.getProperty("path.page.myBookings");
-            List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAllBookingByUser(userId);
+            List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingByUser(userId);
             request.setAttribute("bookingByUser", bookings);
             LOG.info("User " + login + " looked up a list of his bookings");
         } catch (ServiceException | SQLException e) {

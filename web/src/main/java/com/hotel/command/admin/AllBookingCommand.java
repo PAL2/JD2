@@ -4,7 +4,6 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.entity.BookingEntity;
 import com.hotel.service.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 
@@ -19,7 +18,7 @@ public class AllBookingCommand implements ActionCommand {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.allBookings");
-            List<BookingEntity> bookings = BookingServiceImpl.getInstance().getAll();
+            List<Booking> bookings = BookingServiceImpl.getInstance().getAll();
             request.setAttribute("allBooking", bookings);
         } catch (ServiceException | SQLException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
