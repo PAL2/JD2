@@ -140,17 +140,14 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
     }
 
     public List<BookingEntity> getAllBookingWithAccount() throws DaoException {
-        Connection conn = DBUtil.getConnection();
         List<BookingEntity> bookings;
         try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM booking WHERE account_id!=0");
-            bookings = resultSetToBookingsList(resultSet);
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM BookingEntity B WHERE B.accountId!=0");
+            bookings = query.list();
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Failed to create a list of bookings with the invoice");
+            LOG.info("Failed to create a list of bookings with the invoice. Error in DAO");
             throw new DaoException();
         }
         return bookings;

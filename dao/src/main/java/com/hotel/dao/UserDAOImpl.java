@@ -38,7 +38,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
             user = (User) query.uniqueResult();
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to login");
+            LOG.info("Unable to login. Error in DAO");
             throw new DaoException();
         }
         return user;
@@ -56,7 +56,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
             session.save(user);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Could not register");
+            LOG.info("Could not register. Error in DAO");
             throw new DaoException();
         }
     }
@@ -98,7 +98,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
             allUsers = criteria.list();
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to create the list of clients");
+            LOG.info("Unable to create the list of clients. Error in DAO");
             throw new DaoException();
         }
         return allUsers;
