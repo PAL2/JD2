@@ -51,7 +51,7 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
             throw new DaoException();
         }
     }
-    
+
     public List<BookingEntity> getAllNewBooking() throws DaoException {
         List<BookingEntity> bookings;
         try {
