@@ -235,32 +235,27 @@ public class BookingDAOImpl implements AbstractDAO<BookingEntity> {
 
     @Override
     public void delete(int bookingId) throws DaoException {
-        Connection conn = DBUtil.getConnection();
         try {
-            String query = "DELETE FROM booking WHERE booking_id=?";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setInt(1, bookingId);
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("DELETE FROM BookingEntity B WHERE B.bookingId=?");
+            query.setParameter(0, bookingId);
+            query.executeUpdate();
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to delete the book");
+            LOG.info("Unable to delete the book. Error in DAO");
             throw new DaoException();
         }
     }
 
     public List<BookingEntity> getAll() throws DaoException {
-        Connection conn = DBUtil.getConnection();
         List<BookingEntity> bookings;
         try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM booking");
-            bookings = resultSetToBookingsList(resultSet);
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
+            Session session = util.getSession();
+            Query query = session.createQuery("FROM BookingEntity");
+            bookings = query.list();
+        } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Failed to create a list of bookings");
+            LOG.info("Failed to create a list of bookings. Error in DAO");
             throw new DaoException();
         }
         return bookings;
