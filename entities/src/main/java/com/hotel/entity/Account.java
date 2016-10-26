@@ -76,4 +76,12 @@ public class Account extends AbstractEntity {
         result = 31 * result + summa;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", summa=" + summa +
+                '}';
+    }
 }

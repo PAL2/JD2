@@ -1,12 +1,18 @@
 package com.hotel.entity;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "room", schema = "booking")
 public class Room extends AbstractEntity {
 
@@ -116,7 +122,6 @@ public class Room extends AbstractEntity {
                 ", category='" + category + '\'' +
                 ", place=" + place +
                 ", price=" + price +
-                ", bookingEntities=" + bookingEntities +
                 '}';
     }
 }
