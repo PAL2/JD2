@@ -89,8 +89,8 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         List<Booking> bookings;
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("FROM Booking B WHERE B.userId=?");
-            query.setParameter(0, userId);
+            Query query = session.createQuery("FROM Booking B WHERE B.userId=:userId");
+            query.setParameter("userId", userId);
             bookings = query.list();
             LOG.info(bookings);
         } catch (HibernateException e) {
@@ -181,10 +181,10 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         try {
             Session session = util.getSession();
             Query query = session.createQuery("FROM Booking B " +
-                    "WHERE B.accountId!=0 AND (B.status=? OR B.status=?) AND B.userId=?");
-            query.setParameter(0, "paid");
-            query.setParameter(1, "refused");
-            query.setParameter(2, userId);
+                    "WHERE B.accountId!=0 AND (B.status=:paid OR B.status=:refused) AND B.userId=:userId");
+            query.setString("paid", "paid");
+            query.setString("refused", "refused");
+            query.setInteger("userId", userId);
             bookings = query.list();
             LOG.info(bookings);
         } catch (HibernateException e) {
@@ -209,8 +209,8 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
     public void delete(int bookingId) throws DaoException {
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("DELETE FROM Booking B WHERE B.bookingId=?");
-            query.setParameter(0, bookingId);
+            Query query = session.createQuery("DELETE FROM Booking B WHERE B.bookingId=:bookingId");
+            query.setParameter("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
             e.printStackTrace();
