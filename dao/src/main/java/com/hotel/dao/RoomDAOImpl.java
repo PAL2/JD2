@@ -6,9 +6,11 @@ import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.spi.LocaleNameProvider;
 
 public class RoomDAOImpl implements AbstractDAO<Room> {
     private final String GET_ALL_ROOMS = " from Room";
@@ -75,13 +78,13 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
     }
 
 
-    public List<Room> getAll() throws DaoException {
+    public List<Room> getAll(int recordsPerPage, int currentPage) throws DaoException {
         List<Room> rooms;
         try {
             Session session = util.getSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
-            query.setFirstResult(0);
-            query.setMaxResults(6);
+            query.setFirstResult((currentPage-1) * recordsPerPage);
+            query.setMaxResults(recordsPerPage);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {
@@ -89,6 +92,22 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             throw new DaoException();
         }
         return rooms;
+    }
+
+    public Long getAmount() throws DaoException{
+        Long amount;
+        try {
+            Session session = util.getSession();
+            Criteria criteria = session.createCriteria(Room.class);
+            criteria.setProjection(Projections.rowCount());
+            amount = (Long) criteria.uniqueResult();
+            LOG.info(amount);
+        }
+        catch(HibernateException e){
+            LOG.error("Unable to get number of records. Error in DAO: " + e);
+            throw new DaoException();
+        }
+        return amount;
     }
 
     @Override
@@ -104,5 +123,10 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
     @Override
     public void delete(int id) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public List<Room> getAll() throws DaoException {
+        return null;
     }
 }

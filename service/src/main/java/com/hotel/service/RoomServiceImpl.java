@@ -30,13 +30,13 @@ public class RoomServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Room> getAll() throws SQLException, ServiceException {
+    public List<Room> getAll(int recordsPerPage, int currentPage) throws SQLException, ServiceException {
         List<Room> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            rooms = roomDAO.getAll();
+            rooms = roomDAO.getAll(recordsPerPage, currentPage);
             transaction.commit();
             LOG.info(rooms);
         } catch (DaoException e) {
@@ -65,5 +65,24 @@ public class RoomServiceImpl extends AbstractService {
             throw new ServiceException(e.getMessage());
         }
         return rooms;
+    }
+
+    public int getNumberOfPages(int recordsPerPage) throws ServiceException{
+        int numberOfPages;
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Long numberOfRecords = roomDAO.getAmount();
+            numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
+            transaction.commit();
+            LOG.info(numberOfPages);
+        }
+        catch (DaoException e) {
+            transaction.rollback();
+            LOG.info("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+        return numberOfPages;
     }
 }
