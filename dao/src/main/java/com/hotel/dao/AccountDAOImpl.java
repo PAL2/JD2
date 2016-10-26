@@ -47,8 +47,8 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         List<Account> accounts;
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("FROM Account WHERE booking.userId=?");
-            query.setParameter(0, userId);
+            Query query = session.createQuery("FROM Account WHERE booking.userId=:userId");
+            query.setParameter("userId", userId);
             accounts = query.list();
             LOG.info(accounts);
         } catch (HibernateException e) {
