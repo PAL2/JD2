@@ -38,7 +38,7 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
             LOG.info(account);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to add account. Error in DAO");
+            LOG.error("Unable to add account. Error in DAO");
             throw new DaoException();
         }
     }
@@ -61,14 +61,17 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
 
     @Override
     public void create(Account entity) throws DaoException {
+
     }
 
     @Override
     public void update(Account entity) throws DaoException {
+
     }
 
-    public void delete(int id) {
-        // TODO Auto-generated method stub
+    @Override
+    public void delete(int id) throws DaoException {
+
     }
 
     public List<Account> getAll() throws DaoException {

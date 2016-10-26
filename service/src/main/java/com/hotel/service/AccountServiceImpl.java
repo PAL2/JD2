@@ -41,7 +41,7 @@ public class AccountServiceImpl extends AbstractService {
             LOG.info(accounts);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed. Error in service");
             throw new ServiceException(e.getMessage());
 
         }
@@ -59,7 +59,7 @@ public class AccountServiceImpl extends AbstractService {
             LOG.info(accounts);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return accounts;

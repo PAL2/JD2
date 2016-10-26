@@ -36,9 +36,10 @@ public class UserDAOImpl implements AbstractDAO<User> {
             query.setParameter("login", login);
             query.setParameter("password", hash(password));
             user = (User) query.uniqueResult();
+            LOG.info(user);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to login. Error in DAO");
+            LOG.error("Unable to login. Error in DAO");
             throw new DaoException();
         }
         return user;
@@ -56,7 +57,7 @@ public class UserDAOImpl implements AbstractDAO<User> {
             session.save(user);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Could not register. Error in DAO");
+            LOG.error("Could not register. Error in DAO");
             throw new DaoException();
         }
     }
@@ -96,9 +97,10 @@ public class UserDAOImpl implements AbstractDAO<User> {
             Criteria criteria = session.createCriteria(User.class);
             criteria.add(Restrictions.eq("userRole", "client"));
             allUsers = criteria.list();
+            LOG.info(allUsers);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.info("Unable to create the list of clients. Error in DAO");
+            LOG.error("Unable to create the list of clients. Error in DAO");
             throw new DaoException();
         }
         return allUsers;
