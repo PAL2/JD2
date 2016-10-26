@@ -45,7 +45,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -62,7 +62,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -90,7 +90,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(room);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -105,7 +105,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info("Deleting is completed successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -121,7 +121,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -137,7 +137,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info("Rejecting is completed successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -153,7 +153,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -170,7 +170,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -187,7 +187,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info("Booking added is successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -202,7 +202,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info("Booking is paid successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -217,7 +217,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info("Transaction is completed successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }
@@ -233,7 +233,7 @@ public class BookingServiceImpl extends AbstractService {
             LOG.info(bookings);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return bookings;

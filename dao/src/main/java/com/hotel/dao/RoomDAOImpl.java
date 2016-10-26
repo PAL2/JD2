@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.spi.LocaleNameProvider;
 
 public class RoomDAOImpl implements AbstractDAO<Room> {
     private final String GET_ALL_ROOMS = " from Room";
@@ -69,9 +68,10 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             rooms = resultSetToRoomsList(resultSet);
             resultSet.close();
             ps.close();
+            LOG.info(rooms);
         } catch (SQLException e) {
             e.printStackTrace();
-            LOG.error("Unable to create a list of matching numbers");
+            LOG.error("Unable to create a list of matching numbers. Error in DAO");
             throw new DaoException();
         }
         return rooms;
@@ -83,18 +83,18 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         try {
             Session session = util.getSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
-            query.setFirstResult((currentPage-1) * recordsPerPage);
+            query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {
-            LOG.error("Unable to return list of clients. Error in DAO: ");
+            LOG.error("Unable to return list of clients. Error in DAO");
             throw new DaoException();
         }
         return rooms;
     }
 
-    public Long getAmount() throws DaoException{
+    public Long getAmount() throws DaoException {
         Long amount;
         try {
             Session session = util.getSession();
@@ -102,9 +102,8 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             criteria.setProjection(Projections.rowCount());
             amount = (Long) criteria.uniqueResult();
             LOG.info(amount);
-        }
-        catch(HibernateException e){
-            LOG.error("Unable to get number of records. Error in DAO: " + e);
+        } catch (HibernateException e) {
+            LOG.error("Unable to get number of records. Error in DAO");
             throw new DaoException();
         }
         return amount;

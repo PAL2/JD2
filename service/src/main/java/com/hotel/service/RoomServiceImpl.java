@@ -41,7 +41,7 @@ public class RoomServiceImpl extends AbstractService {
             LOG.info(rooms);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return rooms;
@@ -61,13 +61,13 @@ public class RoomServiceImpl extends AbstractService {
             LOG.info(rooms);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return rooms;
     }
 
-    public int getNumberOfPages(int recordsPerPage) throws ServiceException{
+    public int getNumberOfPages(int recordsPerPage) throws ServiceException {
         int numberOfPages;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -77,10 +77,9 @@ public class RoomServiceImpl extends AbstractService {
             numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
             transaction.commit();
             LOG.info(numberOfPages);
-        }
-        catch (DaoException e) {
+        } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return numberOfPages;

@@ -40,7 +40,7 @@ public class UserServiceImpl extends AbstractService {
             LOG.info(user);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
         return user;
@@ -57,7 +57,7 @@ public class UserServiceImpl extends AbstractService {
             LOG.info(users);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed. Error in Service");
             throw new ServiceException(e.getMessage());
         }
         return users;
@@ -71,7 +71,7 @@ public class UserServiceImpl extends AbstractService {
             transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.error("Transaction is completed successfully");
         } catch (DaoException e) {
             transaction.rollback();
             LOG.info("Transaction failed");
