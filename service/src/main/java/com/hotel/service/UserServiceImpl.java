@@ -71,10 +71,40 @@ public class UserServiceImpl extends AbstractService {
             transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
             transaction.commit();
-            LOG.error("Transaction is completed successfully");
+            LOG.info("Transaction is completed successfully");
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.info("Transaction failed");
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void save(User user) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            userDAO.save(user);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void delete(int id) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            userDAO.delete(id);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
     }

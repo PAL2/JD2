@@ -60,8 +60,14 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
     }
 
     @Override
-    public void create(Account entity) throws DaoException {
-
+    public void save(Account entity) throws DaoException {
+        try {
+            Session session = util.getSession();
+            session.saveOrUpdate(entity);
+        } catch (HibernateException e) {
+            LOG.error("Error in DAO");
+            throw new DaoException();
+        }
     }
 
     @Override
@@ -71,7 +77,15 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
 
     @Override
     public void delete(int id) throws DaoException {
-
+        try {
+            Session session = util.getSession();
+            Account account = (Account) session.get(Account.class, id);
+            session.delete(account);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            LOG.error("Unable to delete the book. Error in DAO");
+            throw new DaoException();
+        }
     }
 
     public List<Account> getAll() throws DaoException {

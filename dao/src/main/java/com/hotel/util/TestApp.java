@@ -1,10 +1,12 @@
 package com.hotel.util;
 
-import com.hotel.entity.Room;
-import org.hibernate.Criteria;
+import com.hotel.entity.Booking;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static com.hotel.dao.AbstractDAO.util;
 
@@ -14,13 +16,11 @@ import static com.hotel.dao.AbstractDAO.util;
 public class TestApp {
 
     public static void main(String[] args) {
-        Long amount;
         Session session = util.getSession();
         Transaction transaction = session.beginTransaction();
-        Criteria criteria = session.createCriteria(Room.class);
-        criteria.setProjection(Projections.rowCount());
-        amount = (Long) criteria.uniqueResult();
-        System.out.println(amount);
+        int id = 91;
+        Booking booking = (Booking) session.get(Booking.class, id);
+        session.delete(booking);
         transaction.commit();
     }
 }

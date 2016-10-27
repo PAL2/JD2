@@ -196,22 +196,15 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
     }
 
     @Override
-    public void create(Booking entity) throws DaoException {
-
-    }
-
-    @Override
     public void update(Booking entity) throws DaoException {
 
     }
 
-    @Override
-    public void delete(int bookingId) throws DaoException {
+    public void delete(int id) throws DaoException {
         try {
             Session session = util.getSession();
-            Query query = session.createQuery("DELETE FROM Booking B WHERE B.bookingId=:bookingId");
-            query.setParameter("bookingId", bookingId);
-            query.executeUpdate();
+            Booking booking = (Booking) session.get(Booking.class, id);
+            session.delete(booking);
         } catch (HibernateException e) {
             e.printStackTrace();
             LOG.error("Unable to delete the book. Error in DAO");
@@ -232,5 +225,15 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
             throw new DaoException();
         }
         return bookings;
+    }
+
+    public void save(Booking entity) throws DaoException {
+        try {
+            Session session = util.getSession();
+            session.saveOrUpdate(entity);
+        } catch (HibernateException e) {
+            LOG.error("Error in DAO");
+            throw new DaoException();
+        }
     }
 }

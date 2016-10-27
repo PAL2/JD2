@@ -12,7 +12,7 @@ import java.util.List;
 public interface AbstractDAO<T extends AbstractEntity> {
     static HibernateUtil util = HibernateUtil.getInstance();
 
-    void create(T entity) throws DaoException;
+    void save (T entity) throws DaoException;
 
     void update(T entity) throws DaoException;
 

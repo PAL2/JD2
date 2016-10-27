@@ -84,4 +84,34 @@ public class RoomServiceImpl extends AbstractService {
         }
         return numberOfPages;
     }
+
+    public void save(Room room) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            roomDAO.save(room);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void delete(int id) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            roomDAO.delete(id);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

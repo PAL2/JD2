@@ -64,4 +64,34 @@ public class AccountServiceImpl extends AbstractService {
         }
         return accounts;
     }
+
+    public void save(Account account) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            accountDAO.save(account);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void delete(int id) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            accountDAO.delete(id);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

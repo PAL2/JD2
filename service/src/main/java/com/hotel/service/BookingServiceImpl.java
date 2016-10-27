@@ -238,4 +238,19 @@ public class BookingServiceImpl extends AbstractService {
         }
         return bookings;
     }
+
+    public void save(Booking booking) throws ServiceException {
+        Session session = util.getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            bookingDAO.save(booking);
+            transaction.commit();
+            LOG.info("Transaction is completed successfully");
+        } catch (DaoException e) {
+            transaction.rollback();
+            LOG.error("Transaction failed");
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

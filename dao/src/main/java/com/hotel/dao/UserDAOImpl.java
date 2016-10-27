@@ -79,15 +79,20 @@ public class UserDAOImpl implements AbstractDAO<User> {
     }
 
     @Override
-    public void create(User entity) throws DaoException {
-    }
-
-    @Override
     public void update(User entity) throws DaoException {
     }
 
     @Override
-    public void delete(int userId) throws DaoException {
+    public void delete(int id) throws DaoException {
+        try {
+            Session session = util.getSession();
+            User user = (User) session.get(User.class, id);
+            session.delete(user);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            LOG.error("Unable to delete the book. Error in DAO");
+            throw new DaoException();
+        }
     }
 
     public List<User> getAll() throws DaoException {
@@ -104,5 +109,15 @@ public class UserDAOImpl implements AbstractDAO<User> {
             throw new DaoException();
         }
         return allUsers;
+    }
+
+    public void save(User entity) throws DaoException {
+        try {
+            Session session = util.getSession();
+            session.saveOrUpdate(entity);
+        } catch (HibernateException e) {
+            LOG.error("Error in DAO");
+            throw new DaoException();
+        }
     }
 }
