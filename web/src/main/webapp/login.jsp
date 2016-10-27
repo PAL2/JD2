@@ -10,9 +10,9 @@
 	<form name="LoginForm" method="post" action="controller">
 		<input type="hidden" name="command" value="login"/>
 		 Login:<br />
-		  <input type="text" name="login" value="" />
+		  <input type="text" name="login" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
 		  <br/>Password:<br/> 
-		  <input type="password" name="password" value="" />
+		  <input type="password" name="password" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
 			<br/>
 			<a href=reg.jsp>Registration</a>
 		<h4>${errorLoginPassMessage}</h4>

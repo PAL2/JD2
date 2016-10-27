@@ -14,24 +14,24 @@
 <form name="reg" action="controller" method="post" onsubmit="return check();">
     <fieldset>
         <div>
-            <label for="firstName">First Name:</label><br> <input
-                type="text" name="firstName" value="" required/>
+            <label for="firstName">First Name:</label><br>
+            <input type="text" name="firstName" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
         </div>
         <div>
-            <label for="lastName">Last Name:</label><br> <input type="text"
-                                                                name="lastName" value="" required/>
+            <label for="lastName">Last Name:</label><br>
+            <input type="text" name="lastName" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
         </div>
         <div>
-            <label for="login">Login:</label><br> <input type="text"
-                                                         name="login" value="" required/>
+            <label for="login">Login:</label><br>
+            <input type="text" name="login" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
         </div>
         <div>
-            <label for="password">Password:</label><br> <input
-                type="password" name="password" value="" required />
+            <label for="password">Password:</label><br>
+            <input type="password" name="password" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
         </div>
         <div>
-            <input type="hidden" name="command" value="reg"/> <input
-                type="submit" value="Registration" onsubmit="return check()"/>
+            <input type="hidden" name="command" value="reg"/>
+            <input type="submit" value="Registration" onsubmit="return check()"/>
         </div>
     </fieldset>
 </form>

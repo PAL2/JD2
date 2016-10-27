@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "com.hotel.entity.Room")
 @Table(name = "room", schema = "booking")
 public class Room extends AbstractEntity {
 
