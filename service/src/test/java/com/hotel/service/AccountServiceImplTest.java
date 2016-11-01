@@ -58,6 +58,7 @@ public class AccountServiceImplTest {
         save();
     }
 
+    @Ignore
     @Test
     public void getAllAccountById() throws Exception {
         user.setUserId(userId);
