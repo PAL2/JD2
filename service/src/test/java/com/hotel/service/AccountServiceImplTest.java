@@ -55,13 +55,13 @@ public class AccountServiceImplTest {
         //   booking.setRoom(room);
         booking.setUser(user);
         booking2.setUser(user);
-        persistEntities();
+        save();
     }
 
     @Test
     public void getAllAccountById() throws Exception {
         user.setUserId(userId);
-
+        getAllAccountById();
 
 
     }
@@ -87,7 +87,7 @@ public class AccountServiceImplTest {
         userService = null;
     }
 
-    private void persistEntities() throws Exception {
+    private void save() throws Exception {
         userService.save(user);
         bookingService.save(booking);
         //  roomService.save(room);
