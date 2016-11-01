@@ -41,9 +41,10 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             rooms = roomDAO.getAll(recordsPerPage, currentPage);
             transaction.commit();
             LOG.info(rooms);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return rooms;
@@ -61,9 +62,10 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             transaction.commit();
             LOG.info(booking);
             LOG.info(rooms);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return rooms;
@@ -79,9 +81,10 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
             transaction.commit();
             LOG.info(numberOfPages);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return numberOfPages;
@@ -94,10 +97,10 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             transaction = session.beginTransaction();
             roomDAO.save(room);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -114,10 +117,10 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             transaction = session.beginTransaction();
             roomDAO.delete(id);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }

@@ -44,9 +44,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAllBookingWithAccount();
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -61,9 +62,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAll();
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -89,9 +91,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction.commit();
             LOG.info(booking);
             LOG.info(room);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -103,10 +106,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.delete(bookingId);
             transaction.commit();
-            LOG.info("Deleting is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -120,9 +123,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAllNewBooking();
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -135,10 +139,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.rejectBooking(bookingId);
             transaction.commit();
-            LOG.info("Rejecting is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -152,9 +156,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAllBookingWithFinishedAccount(userId);
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -169,9 +174,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAllBookingByUser(userId);
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -185,10 +191,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.addBooking(userId, place, category, startDate, endDate);
             transaction.commit();
-            LOG.info("Booking added is successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -200,10 +206,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.payBooking(bookingId);
             transaction.commit();
-            LOG.info("Booking is paid successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -215,10 +221,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.refuseBooking(bookingId);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -232,9 +238,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookings = bookingDAO.getAllBookingWithAccountByUser(userId);
             transaction.commit();
             LOG.info(bookings);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return bookings;
@@ -247,10 +254,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             transaction = session.beginTransaction();
             bookingDAO.save(booking);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }

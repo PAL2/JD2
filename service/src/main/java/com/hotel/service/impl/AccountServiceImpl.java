@@ -40,9 +40,10 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accounts = accountDAO.getAll();
             transaction.commit();
             LOG.info(accounts);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed. Error in service");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
 
         }
@@ -58,9 +59,10 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accounts = accountDAO.getAllAccountByUser(userId);
             transaction.commit();
             LOG.info(accounts);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return accounts;
@@ -73,10 +75,10 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             transaction = session.beginTransaction();
             accountDAO.save(account);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -93,10 +95,10 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             transaction = session.beginTransaction();
             accountDAO.delete(id);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }

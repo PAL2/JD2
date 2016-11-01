@@ -39,9 +39,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             user = userDAO.logIn(login, password);
             transaction.commit();
             LOG.info(user);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return user;
@@ -56,9 +57,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             users = userDAO.getAll();
             transaction.commit();
             LOG.info(users);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed. Error in Service");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return users;
@@ -71,10 +73,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -86,10 +88,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             transaction = session.beginTransaction();
             userDAO.save(user);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
@@ -106,10 +108,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             transaction = session.beginTransaction();
             userDAO.delete(id);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
