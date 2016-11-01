@@ -1,16 +1,17 @@
-package com.hotel.service;
+package com.hotel.service.impl;
 
+import com.hotel.dao.exceptions.DaoException;
 import com.hotel.dao.impl.AccountDAOImpl;
 import com.hotel.dao.impl.BookingDAOImpl;
-import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
+import com.hotel.service.AbstractService;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by Алексей on 01.10.2016.
  */
-public class BookingServiceImpl extends AbstractService {
+public class BookingServiceImpl extends AbstractService<Booking> implements BookingService {
     private static BookingServiceImpl instance;
     private BookingDAOImpl bookingDAO = BookingDAOImpl.getInstance();
     private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
@@ -207,7 +208,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public void refuseBooking(int bookingId) throws SQLException, ServiceException {
+    public void refuseBooking(int bookingId) throws ServiceException {
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -222,7 +223,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws SQLException, ServiceException {
+    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -252,5 +253,10 @@ public class BookingServiceImpl extends AbstractService {
             LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public void update(Booking entity) throws ServiceException {
+
     }
 }

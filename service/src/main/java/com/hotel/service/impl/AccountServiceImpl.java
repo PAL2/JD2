@@ -1,20 +1,21 @@
-package com.hotel.service;
+package com.hotel.service.impl;
 
 import com.hotel.dao.impl.AccountDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Account;
+import com.hotel.service.AbstractService;
+import com.hotel.service.AccountService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by Алексей on 02.10.2016.
  */
-public class AccountServiceImpl extends AbstractService {
+public class AccountServiceImpl extends AbstractService<Account> implements AccountService {
     final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
     private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
 
@@ -78,6 +79,11 @@ public class AccountServiceImpl extends AbstractService {
             LOG.error("Transaction failed");
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public void update(Account entity) throws ServiceException {
+
     }
 
     public void delete(int id) throws ServiceException {

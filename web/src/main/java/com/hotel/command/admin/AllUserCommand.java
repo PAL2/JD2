@@ -4,11 +4,10 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.User;
-import com.hotel.service.UserServiceImpl;
+import com.hotel.service.impl.UserServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AllUserCommand implements ActionCommand {
