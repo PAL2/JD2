@@ -1,6 +1,6 @@
 package com.hotel.service;
 
-import com.hotel.dao.UserDAOImpl;
+import com.hotel.dao.impl.UserDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.User;
 import com.hotel.service.exceptions.ServiceException;

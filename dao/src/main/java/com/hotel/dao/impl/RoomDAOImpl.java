@@ -1,6 +1,7 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
 import com.hotel.connect.DBUtil;
+import com.hotel.dao.AbstractDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAOImpl implements AbstractDAO<Room> {
+public class RoomDAOImpl extends AbstractDAO<Room> {
     private final String GET_ALL_ROOMS = " from Room";
     private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);

@@ -1,5 +1,6 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
+import com.hotel.dao.AbstractDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.User;
 import org.apache.log4j.Logger;
@@ -14,7 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-public class UserDAOImpl implements AbstractDAO<User> {
+public class UserDAOImpl extends AbstractDAO<User> {
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 

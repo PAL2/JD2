@@ -1,5 +1,6 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
+import com.hotel.dao.AbstractDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
@@ -14,7 +15,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-public class BookingDAOImpl implements AbstractDAO<Booking> {
+public class BookingDAOImpl extends AbstractDAO<Booking> {
     private static BookingDAOImpl instance;
 
     private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);

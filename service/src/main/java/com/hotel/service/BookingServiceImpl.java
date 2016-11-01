@@ -1,7 +1,7 @@
 package com.hotel.service;
 
-import com.hotel.dao.AccountDAOImpl;
-import com.hotel.dao.BookingDAOImpl;
+import com.hotel.dao.impl.AccountDAOImpl;
+import com.hotel.dao.impl.BookingDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
