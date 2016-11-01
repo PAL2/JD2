@@ -1,5 +1,6 @@
 package com.hotel.dao;
 
+import com.hotel.dao.impl.BookingDAOImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

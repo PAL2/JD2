@@ -1,5 +1,7 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
+import com.hotel.dao.AbstractDAO;
+import com.hotel.dao.AccountDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
@@ -8,14 +10,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class AccountDAOImpl implements AbstractDAO<Account> {
+public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     private static AccountDAOImpl instance;
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
 
     private AccountDAOImpl() {
+        super(Account.class);
     }
 
     public static synchronized AccountDAOImpl getInstance() {
@@ -25,7 +27,8 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         return instance;
     }
 
-    public void addAccount(int summa, Booking booking) throws DaoException, SQLException {
+    @Override
+    public void addAccount(int summa, Booking booking) throws DaoException {
         Account account = new Account();
         try {
             Session session = util.getSession();
@@ -43,6 +46,7 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         }
     }
 
+    @Override
     public List<Account> getAllAccountByUser(int userId) throws DaoException {
         List<Account> accounts;
         try {
@@ -59,46 +63,4 @@ public class AccountDAOImpl implements AbstractDAO<Account> {
         return accounts;
     }
 
-    @Override
-    public void save(Account entity) throws DaoException {
-        try {
-            Session session = util.getSession();
-            session.saveOrUpdate(entity);
-        } catch (HibernateException e) {
-            LOG.error("Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    @Override
-    public void update(Account entity) throws DaoException {
-
-    }
-
-    @Override
-    public void delete(int id) throws DaoException {
-        try {
-            Session session = util.getSession();
-            Account account = (Account) session.get(Account.class, id);
-            session.delete(account);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to delete the book. Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    public List<Account> getAll() throws DaoException {
-        List<Account> accounts;
-        try {
-            Session session = util.getSession();
-            Query query = session.createQuery("FROM Account");
-            accounts = query.list();
-            LOG.info(accounts);
-        } catch (HibernateException e) {
-            LOG.error("Unable to create a list of accounts. Error in DAO");
-            throw new DaoException();
-        }
-        return accounts;
-    }
 }

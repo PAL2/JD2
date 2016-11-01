@@ -1,5 +1,7 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
+import com.hotel.dao.AbstractDAO;
+import com.hotel.dao.BookingDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
@@ -14,12 +16,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-public class BookingDAOImpl implements AbstractDAO<Booking> {
+public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     private static BookingDAOImpl instance;
 
     private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
 
     private BookingDAOImpl() {
+        super(Booking.class);
     }
 
     public static synchronized BookingDAOImpl getInstance() {
@@ -29,6 +32,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return instance;
     }
 
+    @Override
     public void addBooking(int userId, int place, String category, LocalDate startDate, LocalDate endDate)
             throws DaoException {
         Date sqlStartDate = Date.valueOf(startDate);
@@ -53,6 +57,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
+    @Override
     public List<Booking> getAllNewBooking() throws DaoException {
         List<Booking> bookings;
         try {
@@ -69,6 +74,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
+    @Override
     public void chooseRoom(int bookingId, int roomId) throws DaoException {
         try {
             Session session = util.getSession();
@@ -85,6 +91,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
+    @Override
     public List<Booking> getAllBookingByUser(int userId) throws DaoException {
         List<Booking> bookings;
         try {
@@ -101,6 +108,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
+    @Override
     public void rejectBooking(int bookingId) throws DaoException {
         try {
             Session session = util.getSession();
@@ -115,6 +123,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
+    @Override
     public List<Booking> getAllBookingWithAccount() throws DaoException {
         List<Booking> bookings;
         try {
@@ -130,6 +139,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
+    @Override
     public List<Booking> getAllBookingWithAccountByUser(int userId) throws DaoException {
         List<Booking> bookings;
         try {
@@ -148,6 +158,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
+    @Override
     public void payBooking(int bookingId) throws DaoException {
         try {
             Session session = util.getSession();
@@ -162,6 +173,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
+    @Override
     public void refuseBooking(int bookingId) throws DaoException {
         try {
             Session session = util.getSession();
@@ -176,6 +188,7 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         }
     }
 
+    @Override
     public List<Booking> getAllBookingWithFinishedAccount(int userId) throws DaoException {
         List<Booking> bookings;
         try {
@@ -195,45 +208,4 @@ public class BookingDAOImpl implements AbstractDAO<Booking> {
         return bookings;
     }
 
-    @Override
-    public void update(Booking entity) throws DaoException {
-
-    }
-
-    public void delete(int id) throws DaoException {
-        try {
-            Session session = util.getSession();
-            Booking booking = (Booking) session.get(Booking.class, id);
-            session.delete(booking);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to delete the book. Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    public List<Booking> getAll() throws DaoException {
-        List<Booking> bookings;
-        try {
-            Session session = util.getSession();
-            Query query = session.createQuery("FROM Booking");
-            bookings = query.list();
-            LOG.info(bookings);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list of bookings. Error in DAO");
-            throw new DaoException();
-        }
-        return bookings;
-    }
-
-    public void save(Booking entity) throws DaoException {
-        try {
-            Session session = util.getSession();
-            session.saveOrUpdate(entity);
-        } catch (HibernateException e) {
-            LOG.error("Error in DAO");
-            throw new DaoException();
-        }
-    }
 }

@@ -6,8 +6,8 @@ import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
-import com.hotel.service.AccountServiceImpl;
-import com.hotel.service.BookingServiceImpl;
+import com.hotel.service.impl.AccountServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class UnpaidAccountCommand implements ActionCommand {
             List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.unpaidAccounts");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

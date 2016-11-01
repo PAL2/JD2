@@ -6,8 +6,8 @@ import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
-import com.hotel.service.AccountServiceImpl;
-import com.hotel.service.BookingServiceImpl;
+import com.hotel.service.impl.AccountServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 
@@ -33,7 +33,7 @@ public class RefuseCommand implements ActionCommand {
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.myAccounts");
             LOG.info("User " + login + " rejected the bill book № " + bookingId);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

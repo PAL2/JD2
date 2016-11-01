@@ -11,8 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import static com.hotel.dao.AbstractDAO.util;
-
 /**
  * Created by Алексей on 16.10.2016.
  */
@@ -23,7 +21,7 @@ public class TestApp {
     private static UserServiceImpl userService;*/
 
     public static void main(String[] args) {
-        Session session = util.getSession();
+       /* Session session = util.getSession();
         Transaction transaction = session.beginTransaction();
         Room room = new Room("TEST", 33, 1000);
         Account expectedAccount = new Account(5000);
@@ -36,6 +34,6 @@ public class TestApp {
         booking.setAccount(expectedAccount);
         booking.setRoom(room);
         booking.setUser(user);
-        transaction.commit();
+        transaction.commit();*/
     }
 }

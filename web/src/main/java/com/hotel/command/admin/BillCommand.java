@@ -4,12 +4,11 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.service.BookingServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 public class BillCommand implements ActionCommand {
@@ -26,7 +25,7 @@ public class BillCommand implements ActionCommand {
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
             LOG.info("Booking № " + bookingId + " confirmed and sent account");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

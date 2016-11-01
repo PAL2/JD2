@@ -1,21 +1,23 @@
-package com.hotel.service;
+package com.hotel.service.impl;
 
-import com.hotel.dao.RoomDAOImpl;
+import com.hotel.dao.RoomDAO;
+import com.hotel.dao.impl.RoomDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
+import com.hotel.service.AbstractService;
+import com.hotel.service.RoomService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by Алексей on 01.10.2016.
  */
-public class RoomServiceImpl extends AbstractService {
+public class RoomServiceImpl extends AbstractService<Room> implements RoomService{
     private static RoomServiceImpl instance;
     private RoomDAOImpl roomDAO = RoomDAOImpl.getInstance();
     final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
@@ -30,7 +32,7 @@ public class RoomServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Room> getAll(int recordsPerPage, int currentPage) throws SQLException, ServiceException {
+    public List<Room> getAll(int recordsPerPage, int currentPage) throws ServiceException {
         List<Room> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -39,15 +41,16 @@ public class RoomServiceImpl extends AbstractService {
             rooms = roomDAO.getAll(recordsPerPage, currentPage);
             transaction.commit();
             LOG.info(rooms);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(int bookingId) throws SQLException, ServiceException {
+    public List<Room> getAvailableRooms(int bookingId) throws ServiceException {
         Booking booking;
         List<Room> rooms;
         Session session = util.getSession();
@@ -59,9 +62,10 @@ public class RoomServiceImpl extends AbstractService {
             transaction.commit();
             LOG.info(booking);
             LOG.info(rooms);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return rooms;
@@ -77,9 +81,10 @@ public class RoomServiceImpl extends AbstractService {
             numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
             transaction.commit();
             LOG.info(numberOfPages);
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return numberOfPages;
@@ -92,12 +97,17 @@ public class RoomServiceImpl extends AbstractService {
             transaction = session.beginTransaction();
             roomDAO.save(room);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public void update(Room entity) throws ServiceException {
+
     }
 
     public void delete(int id) throws ServiceException {
@@ -107,11 +117,16 @@ public class RoomServiceImpl extends AbstractService {
             transaction = session.beginTransaction();
             roomDAO.delete(id);
             transaction.commit();
-            LOG.info("Transaction is completed successfully");
+            LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             transaction.rollback();
-            LOG.error("Transaction failed");
+            LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Room> getAll() throws ServiceException {
+        return null;
     }
 }

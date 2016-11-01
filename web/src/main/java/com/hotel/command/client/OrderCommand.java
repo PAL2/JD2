@@ -4,12 +4,11 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.User;
-import com.hotel.service.BookingServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -40,7 +39,7 @@ public class OrderCommand implements ActionCommand {
                 page = ConfigurationManager.getProperty("path.page.order");
                 request.setAttribute("incorrectDate", MessageManager.getProperty("message.incorrectDate"));
             }
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

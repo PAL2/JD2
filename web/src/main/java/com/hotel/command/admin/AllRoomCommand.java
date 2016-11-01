@@ -4,11 +4,10 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Room;
-import com.hotel.service.RoomServiceImpl;
+import com.hotel.service.impl.RoomServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AllRoomCommand implements ActionCommand {
@@ -32,7 +31,7 @@ public class AllRoomCommand implements ActionCommand {
             request.setAttribute("numberOfPages", numberOfPages);
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("recordsPerPage", recordsPerPage);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

@@ -4,6 +4,10 @@ import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.entity.User;
+import com.hotel.service.impl.AccountServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.impl.RoomServiceImpl;
+import com.hotel.service.impl.UserServiceImpl;
 import org.junit.*;
 
 import java.util.Calendar;
@@ -58,6 +62,7 @@ public class AccountServiceImplTest {
         save();
     }
 
+    @Ignore
     @Test
     public void getAllAccountById() throws Exception {
         user.setUserId(userId);

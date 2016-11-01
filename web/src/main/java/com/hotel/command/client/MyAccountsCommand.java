@@ -6,12 +6,11 @@ import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
-import com.hotel.service.AccountServiceImpl;
-import com.hotel.service.BookingServiceImpl;
+import com.hotel.service.impl.AccountServiceImpl;
+import com.hotel.service.impl.BookingServiceImpl;
 import com.hotel.service.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 public class MyAccountsCommand implements ActionCommand {
@@ -27,7 +26,7 @@ public class MyAccountsCommand implements ActionCommand {
             List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.myAccounts");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

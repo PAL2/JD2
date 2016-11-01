@@ -1,6 +1,8 @@
-package com.hotel.dao;
+package com.hotel.dao.impl;
 
 import com.hotel.connect.DBUtil;
+import com.hotel.dao.AbstractDAO;
+import com.hotel.dao.RoomDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
@@ -19,12 +21,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAOImpl implements AbstractDAO<Room> {
+public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     private final String GET_ALL_ROOMS = " from Room";
     private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
     private RoomDAOImpl() {
+        super(Room.class);
     }
 
     public static synchronized RoomDAOImpl getInstance() {
@@ -34,7 +37,8 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return instance;
     }
 
-    private List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
+    @Override
+    public List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
         List<Room> rooms = new ArrayList<>();
         while (resultSet.next()) {
             Room room = new Room();
@@ -47,6 +51,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
+    @Override
     public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
         List<Room> rooms;
@@ -77,7 +82,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
-
+    @Override
     public List<Room> getAll(int recordsPerPage, int currentPage) throws DaoException {
         List<Room> rooms;
         try {
@@ -85,7 +90,6 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             Query query = session.createQuery(GET_ALL_ROOMS);
             query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
-            query.setCacheable(true);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {
@@ -95,6 +99,7 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
         return rooms;
     }
 
+    @Override
     public Long getAmount() throws DaoException {
         Long amount;
         try {
@@ -108,39 +113,5 @@ public class RoomDAOImpl implements AbstractDAO<Room> {
             throw new DaoException();
         }
         return amount;
-    }
-
-
-    @Override
-    public void save(Room entity) throws DaoException {
-        try {
-            Session session = util.getSession();
-            session.saveOrUpdate(entity);
-        } catch (HibernateException e) {
-            LOG.error("Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    @Override
-    public void update(Room entity) throws DaoException {
-    }
-
-    @Override
-    public void delete(int id) throws DaoException {
-        try {
-            Session session = util.getSession();
-            Room room = (Room) session.get(Room.class, id);
-            session.delete(room);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to delete the book. Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    @Override
-    public List<Room> getAll() throws DaoException {
-        return null;
     }
 }
