@@ -27,7 +27,7 @@ public class MyBookingCommand implements ActionCommand {
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingByUser(userId);
             request.setAttribute("bookingByUser", bookings);
             LOG.info("User " + login + " looked up a list of his bookings");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

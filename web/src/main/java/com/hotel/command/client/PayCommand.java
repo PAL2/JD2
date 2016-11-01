@@ -34,7 +34,7 @@ public class PayCommand implements ActionCommand {
             request.setAttribute("paySuccess", MessageManager.getProperty("message.paySuccess"));
             page = ConfigurationManager.getProperty("path.page.myAccounts");
             LOG.info("User " + login + " paid his booking № " + bookingId);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

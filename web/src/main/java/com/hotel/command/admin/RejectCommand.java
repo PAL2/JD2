@@ -24,7 +24,7 @@ public class RejectCommand implements ActionCommand {
             BookingServiceImpl.getInstance().rejectBooking(bookingId);
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

@@ -26,7 +26,7 @@ public class BillCommand implements ActionCommand {
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
             LOG.info("Booking № " + bookingId + " confirmed and sent account");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

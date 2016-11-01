@@ -22,7 +22,7 @@ public class ChooseRoomCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.chooseRoom");
             List<Room> rooms = RoomServiceImpl.getInstance().getAvailableRooms(bookingId);
             request.setAttribute("availableRooms", rooms);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

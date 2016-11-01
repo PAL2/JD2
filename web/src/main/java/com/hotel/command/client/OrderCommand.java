@@ -40,7 +40,7 @@ public class OrderCommand implements ActionCommand {
                 page = ConfigurationManager.getProperty("path.page.order");
                 request.setAttribute("incorrectDate", MessageManager.getProperty("message.incorrectDate"));
             }
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

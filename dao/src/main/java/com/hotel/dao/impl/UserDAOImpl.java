@@ -1,21 +1,19 @@
 package com.hotel.dao.impl;
 
 import com.hotel.dao.AbstractDAO;
+import com.hotel.dao.UserDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.User;
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
-public class UserDAOImpl extends AbstractDAO<User> {
+public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
@@ -30,6 +28,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
         return instance;
     }
 
+    @Override
     public User logIn(String login, String password) throws DaoException {
         User user;
         try {
@@ -47,6 +46,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
         return user;
     }
 
+    @Override
     public void register(String firstName, String lastName, String login, String password) throws DaoException {
         try {
             Session session = util.getSession();
@@ -64,7 +64,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
         }
     }
 
-    private String hash(String input) {
+    @Override
+    public String hash(String input) {
         String md5Hashed = null;
         if (null == input) {
             return null;
@@ -78,48 +79,5 @@ public class UserDAOImpl extends AbstractDAO<User> {
             e.printStackTrace();
         }
         return md5Hashed;
-    }
-
-    @Override
-    public void update(User entity) throws DaoException {
-    }
-
-    @Override
-    public void delete(int id) throws DaoException {
-        try {
-            Session session = util.getSession();
-            User user = (User) session.get(User.class, id);
-            session.delete(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to delete the book. Error in DAO");
-            throw new DaoException();
-        }
-    }
-
-    public List<User> getAll() throws DaoException {
-        List<User> allUsers;
-        try {
-            Session session = util.getSession();
-            Criteria criteria = session.createCriteria(User.class);
-            criteria.add(Restrictions.eq("userRole", "client"));
-            allUsers = criteria.list();
-            LOG.info(allUsers);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to create the list of clients. Error in DAO");
-            throw new DaoException();
-        }
-        return allUsers;
-    }
-
-    public void save(User entity) throws DaoException {
-        try {
-            Session session = util.getSession();
-            session.saveOrUpdate(entity);
-        } catch (HibernateException e) {
-            LOG.error("Error in DAO");
-            throw new DaoException();
-        }
     }
 }

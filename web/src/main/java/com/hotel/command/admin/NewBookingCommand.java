@@ -20,7 +20,7 @@ public class NewBookingCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.admin");
             List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
             request.setAttribute("newBooking", bookings);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

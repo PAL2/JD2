@@ -35,7 +35,7 @@ public class LoginCommand implements ActionCommand {
                 } else {
                     page = ConfigurationManager.getProperty("path.page.order");
                 }
-            } catch (ServiceException | SQLException e) {
+            } catch (ServiceException e) {
                 page = ConfigurationManager.getProperty("path.page.errorDatabase");
                 request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
             }

@@ -25,7 +25,7 @@ public class DeleteBookingCommand implements ActionCommand {
             List<Booking> bookings = BookingServiceImpl.getInstance().getAll();
             request.setAttribute("allBooking", bookings);
             LOG.info("Booking № " + bookingId + " was deleted");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

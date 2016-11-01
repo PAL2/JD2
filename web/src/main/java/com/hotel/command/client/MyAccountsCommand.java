@@ -27,7 +27,7 @@ public class MyAccountsCommand implements ActionCommand {
             List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.myAccounts");
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

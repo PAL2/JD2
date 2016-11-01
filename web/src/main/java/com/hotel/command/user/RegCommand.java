@@ -26,7 +26,7 @@ public class RegCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.login");
             LOG.info("Register a new user with the login " + login + ", name and surname: " +
                     firstName + " " + lastName);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

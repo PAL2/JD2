@@ -20,7 +20,7 @@ public class AllUserCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.allUsers");
             List<User> users = UserServiceImpl.getInstance().getAll();
             request.setAttribute("allUsers", users);
-        } catch (ServiceException | SQLException e) {
+        } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }

@@ -27,6 +27,7 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
         return instance;
     }
 
+    @Override
     public void addAccount(int summa, Booking booking) throws DaoException {
         Account account = new Account();
         try {
@@ -45,6 +46,7 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
         }
     }
 
+    @Override
     public List<Account> getAllAccountByUser(int userId) throws DaoException {
         List<Account> accounts;
         try {
