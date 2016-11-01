@@ -17,6 +17,7 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
 
     private AccountDAOImpl() {
+        super(Account.class);
     }
 
     public static synchronized AccountDAOImpl getInstance() {

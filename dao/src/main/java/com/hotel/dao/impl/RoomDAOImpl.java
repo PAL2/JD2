@@ -26,6 +26,7 @@ public class RoomDAOImpl extends AbstractDAO<Room> {
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
     private RoomDAOImpl() {
+        super(Room.class);
     }
 
     public static synchronized RoomDAOImpl getInstance() {

@@ -21,6 +21,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> {
     private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
 
     private BookingDAOImpl() {
+        super(Booking.class);
     }
 
     public static synchronized BookingDAOImpl getInstance() {

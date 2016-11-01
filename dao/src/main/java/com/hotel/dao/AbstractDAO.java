@@ -18,6 +18,10 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     private final Logger LOG = Logger.getLogger(AbstractDAO.class);
     private Class pClass;
 
+    protected AbstractDAO(Class pClass) {
+        this.pClass = pClass;
+    }
+
 
     @Override
     public void save(T entity) throws DaoException {
@@ -50,17 +54,17 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
-    public List getAll() throws DaoException {
-        List<T> entities;
+    public List<T> getAll() throws DaoException {
+        List<T> results;
         try {
             Session session = util.getSession();
             Criteria criteria = session.createCriteria(pClass);
-            entities = criteria.list();
-            LOG.info(entities);
+            results = criteria.list();
+            LOG.info(results);
         } catch (HibernateException e) {
             LOG.error("Unable to create a list of accounts. Error in DAO");
             throw new DaoException();
         }
-        return entities;
+        return results;
     }
 }

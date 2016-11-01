@@ -34,7 +34,7 @@ public class BookingServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Booking> getAllBookingWithAccount() throws SQLException, ServiceException {
+    public List<Booking> getAllBookingWithAccount() throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -51,7 +51,7 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<Booking> getAll() throws SQLException, ServiceException {
+    public List<Booking> getAll() throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -69,7 +69,7 @@ public class BookingServiceImpl extends AbstractService {
 
     }
 
-    public void chooseRoom(int bookingId, int roomId) throws SQLException, ServiceException {
+    public void chooseRoom(int bookingId, int roomId) throws ServiceException {
         Booking booking;
         Room room;
         Session session = util.getSession();
@@ -95,7 +95,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public void delete(int bookingId) throws SQLException, ServiceException {
+    public void delete(int bookingId) throws ServiceException {
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -110,7 +110,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllNewBooking() throws SQLException, ServiceException {
+    public List<Booking> getAllNewBooking() throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -127,7 +127,7 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public void rejectBooking(int bookingId) throws SQLException, ServiceException {
+    public void rejectBooking(int bookingId) throws ServiceException {
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -142,7 +142,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws SQLException, ServiceException {
+    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -159,7 +159,7 @@ public class BookingServiceImpl extends AbstractService {
         return bookings;
     }
 
-    public List<Booking> getAllBookingByUser(int userId) throws SQLException, ServiceException {
+    public List<Booking> getAllBookingByUser(int userId) throws ServiceException {
         List<Booking> bookings;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -177,7 +177,7 @@ public class BookingServiceImpl extends AbstractService {
     }
 
     public void addBooking(LocalDate startDate, LocalDate endDate, int userId, int place, String category)
-            throws SQLException, ServiceException {
+            throws ServiceException {
         Session session = util.getSession();
         Transaction transaction = null;
         try {
@@ -192,7 +192,7 @@ public class BookingServiceImpl extends AbstractService {
         }
     }
 
-    public void payBooking(int bookingId) throws SQLException, ServiceException {
+    public void payBooking(int bookingId) throws ServiceException {
         Session session = util.getSession();
         Transaction transaction = null;
         try {

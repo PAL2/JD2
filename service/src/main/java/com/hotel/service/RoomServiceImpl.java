@@ -30,7 +30,7 @@ public class RoomServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Room> getAll(int recordsPerPage, int currentPage) throws SQLException, ServiceException {
+    public List<Room> getAll(int recordsPerPage, int currentPage) throws ServiceException {
         List<Room> rooms;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -47,7 +47,7 @@ public class RoomServiceImpl extends AbstractService {
         return rooms;
     }
 
-    public List<Room> getAvailableRooms(int bookingId) throws SQLException, ServiceException {
+    public List<Room> getAvailableRooms(int bookingId) throws ServiceException {
         Booking booking;
         List<Room> rooms;
         Session session = util.getSession();

@@ -20,6 +20,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
     private UserDAOImpl() {
+        super(User.class);
     }
 
     public static synchronized UserDAOImpl getInstance() {
