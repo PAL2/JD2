@@ -30,7 +30,7 @@ public class AccountServiceImpl extends AbstractService {
         return instance;
     }
 
-    public List<Account> getAll() throws SQLException, ServiceException {
+    public List<Account> getAll() throws ServiceException {
         List<Account> accounts;
         Session session = util.getSession();
         Transaction transaction = null;
@@ -48,7 +48,7 @@ public class AccountServiceImpl extends AbstractService {
         return accounts;
     }
 
-    public List<Account> getAllAccountByUser(int userId) throws SQLException, ServiceException {
+    public List<Account> getAllAccountByUser(int userId) throws ServiceException {
         List<Account> accounts;
         Session session = util.getSession();
         Transaction transaction = null;
