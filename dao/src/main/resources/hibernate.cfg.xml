@@ -3,24 +3,30 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/booking</property>
-    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="connection.username">root</property>
-    <property name="connection.password">1234</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.pool_size">10</property>
-    <property name="show_sql">true</property>
-    <property name="format_sql">true</property>
-    <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/booking</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">1234</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.pool_size">10</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
 
-    <!-- Cache -->
-
-    <!-- Mapping -->
-    <mapping class="com.hotel.entity.Account"/>
-    <mapping class="com.hotel.entity.Booking"/>
-    <mapping class="com.hotel.entity.Room"/>
-    <mapping class="com.hotel.entity.User"/>
-  </session-factory>
+        <!-- Cache -->
+        <property name="hibernate.cache.region.factory_class">
+            org.hibernate.cache.ehcache.EhCacheRegionFactory
+        </property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property>
+        <property name="net.sf.ehcache.enableShutdownHook">true</property>
+        <!-- Mapping -->
+        <mapping class="com.hotel.entity.Account"/>
+        <mapping class="com.hotel.entity.Booking"/>
+        <mapping class="com.hotel.entity.Room"/>
+        <mapping class="com.hotel.entity.User"/>
+    </session-factory>
 </hibernate-configuration>
