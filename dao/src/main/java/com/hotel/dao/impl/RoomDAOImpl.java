@@ -8,10 +8,7 @@ import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 
 import java.sql.Connection;
@@ -90,6 +87,8 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
             Query query = session.createQuery(GET_ALL_ROOMS);
             query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
+            query.setCacheable(true);
+            query.setCacheMode(CacheMode.NORMAL);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {
@@ -106,6 +105,7 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
             Session session = util.getSession();
             Criteria criteria = session.createCriteria(Room.class);
             criteria.setProjection(Projections.rowCount());
+            criteria.setCacheable(true);
             amount = (Long) criteria.uniqueResult();
             LOG.info(amount);
         } catch (HibernateException e) {

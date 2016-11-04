@@ -42,4 +42,8 @@
       <page-encoding>UTF-8</page-encoding>
     </jsp-property-group>
   </jsp-config>
+
+  <listener>
+    <listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
+  </listener>
 </web-app>

@@ -72,6 +72,26 @@
                 <version>4.2.2.Final</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache-core</artifactId>
+                <version>2.6.9</version>
+            </dependency>
+            <!-- Hibernate EHCache API -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>4.2.2.Final</version>
+            </dependency>
+            <!-- EHCache uses slf4j for logging -->
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.21</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
